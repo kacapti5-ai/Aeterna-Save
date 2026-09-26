@@ -1,0 +1,109 @@
+/* 云伴玩保 · 市场页 · 宝可梦风浅色主题 */
+:root {
+  --m-bg: #fffbeb;
+  --m-surface: #ffffff;
+  --m-border: #fde68a;
+  --m-primary: #ffcb05;
+  --m-blue: #3b4cca;
+  --m-red: #e3350d;
+  --m-green: #78c850;
+  --m-navy: #1d355c;
+  --m-ink: #1d355c;
+  --m-muted: #64748b;
+}
+
+body.market-body {
+  background: var(--m-bg);
+  color: var(--m-ink);
+  min-height: 100vh;
+}
+
+.market-header {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 3px solid var(--m-primary);
+  backdrop-filter: blur(10px);
+}
+
+.market-card {
+  background: var(--m-surface);
+  border: 2px solid var(--m-border);
+  border-radius: 16px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(59, 76, 202, 0.06);
+}
+
+.market-card:hover {
+  border-color: var(--m-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(59, 76, 202, 0.12);
+}
+
+.btn-g2g {
+  background: linear-gradient(135deg, #ffcb05, #f59e0b);
+  color: var(--m-navy);
+  font-weight: 700;
+  border-radius: 9999px;
+  border: 2px solid var(--m-navy);
+  box-shadow: 0 3px 0 var(--m-navy);
+  transition: transform 0.15s, opacity 0.2s;
+}
+
+.btn-g2g:hover { transform: translateY(-1px); opacity: 0.95; }
+
+.btn-outline-g2g {
+  border: 2px solid var(--m-blue);
+  color: var(--m-blue);
+  border-radius: 9999px;
+  background: #fff;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-outline-g2g:hover { background: #eff6ff; }
+
+.badge-verified { background: #dbeafe; color: #1d4ed8; }
+.badge-escrow { background: #fef9c3; color: #a16207; }
+.badge-compensation { background: #fee2e2; color: #b91c1c; }
+.badge-legacy { background: #ede9fe; color: #5b21b6; }
+.badge-card { background: linear-gradient(135deg, #fef9c3, #dbeafe); color: #1d355c; font-weight: 600; }
+.badge-toy { background: #dcfce7; color: #15803d; }
+
+.game-scroll::-webkit-scrollbar { height: 6px; }
+.game-scroll::-webkit-scrollbar-thumb { background: #fde68a; border-radius: 3px; }
+
+.step-active { border-color: var(--m-blue) !important; color: var(--m-blue); background: #eff6ff !important; }
+.step-done { border-color: var(--m-green) !important; color: #15803d; background: #dcfce7 !important; }
+
+.product-thumb {
+  background: linear-gradient(135deg, #fef9c3 0%, #eff6ff 100%);
+  aspect-ratio: 16/10;
+}
+
+.product-thumb.card-thumb {
+  background: linear-gradient(135deg, #fef3c7 0%, #e0e7ff 40%, #fce7f3 100%);
+}
+
+.legacy-banner {
+  background: linear-gradient(135deg, #eff6ff 0%, #fef9c3 100%);
+  border: 2px solid #93c5fd;
+}
+
+.trust-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.market-body .text-gray-100 { color: var(--m-ink) !important; }
+.market-body .text-gray-300 { color: var(--m-muted) !important; }
+.market-body .text-gray-400 { color: var(--m-muted) !important; }
+.market-body .text-gray-500 { color: var(--m-muted) !important; }
+.market-body .text-orange-400 { color: var(--m-blue) !important; }
+.market-body .text-primary { color: var(--m-blue) !important; }
+.market-body .border-gray-800 { border-color: #fde68a !important; }
+.market-body .bg-\[\#0a0e14\] { background: #eff6ff !important; }
+.market-body .bg-\[\#161b22\] { background: #fff !important; border-color: #fde68a !important; color: var(--m-ink) !important; }

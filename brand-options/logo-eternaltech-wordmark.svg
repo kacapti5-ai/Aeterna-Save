@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="160" viewBox="0 0 640 160" fill="none">
+  <rect x="16" y="16" width="128" height="128" rx="28" fill="#1D355C"/>
+  <circle cx="80" cy="80" r="42" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+  <path d="M58 62H102M58 98H102M80 48V112" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <rect x="72" y="72" width="16" height="22" rx="1" fill="#FFCB05"/>
+  <text x="168" y="88" font-family="Noto Sans SC, sans-serif" font-size="48" font-weight="900" fill="#1D355C" letter-spacing="8">8Rр</text>
+  <text x="170" y="118" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#64748B" letter-spacing="4">ETERNAL TECH</text>
+</svg>

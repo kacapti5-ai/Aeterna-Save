@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <!-- *H�Z�  + ��*(	 -->
+  <rect width="512" height="512" rx="64" fill="#FFFFFF"/>
+  <rect x="48" y="156" width="200" height="200" rx="32" fill="#1D355C"/>
+  <path d="M148 196L228 236V316C228 356 148 384 148 384C148 384 68 356 68 316V236L148 196Z" stroke="#FFFFFF" stroke-width="8" fill="none"/>
+  <rect x="108" y="268" width="80" height="56" rx="3" fill="#FFCB05"/>
+  <path d="M108 288H188" stroke="#1D355C" stroke-width="4"/>
+  <text x="280" y="280" font-family="Noto Serif SC, serif" font-size="72" font-weight="700" fill="#1D355C">Z� </text>
+  <text x="282" y="330" font-family="system-ui, sans-serif" font-size="28" font-weight="600" fill="#64748B" letter-spacing="0.12em">VIRTULEGACY</text>
+</svg>

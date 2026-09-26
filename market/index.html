@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>卡牌 & 游戏资产市场 · Aeterna Save</title>
+  <link rel="stylesheet" href="../css/brand.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/market.css">
+</head>
+<body class="market-body font-sans">
+
+<div id="header"></div>
+
+<main class="pt-20">
+  <section class="py-12 md:py-20 border-b border-amber-200 bg-gradient-to-br from-[#FFFBEB] via-[#EFF6FF] to-[#FEF9C3]">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-[#3B4CCA] text-sm mb-3 font-semibold"><i class="fa fa-star mr-1 text-[#FFCB05]"></i> 宝可梦卡牌 · 实体玩具 · 游戏账号</p>
+      <h1 class="text-3xl md:text-5xl font-bold mb-4 text-[#1D355C]">收藏与交易，一样安心</h1>
+      <p class="text-slate-500 max-w-2xl mx-auto mb-8">PSA 验卡、正版玩具溯源、账号验号托管 — 高值卡牌也可搭配安心计划与香港保险</p>
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a href="browse.html?type=cards" class="btn-g2g px-8 py-4 text-lg"><i class="fa fa-clone mr-2"></i>买卡牌</a>
+        <a href="browse.html?type=toys" class="btn-outline-g2g px-8 py-4 text-lg"><i class="fa fa-gift mr-2"></i>买玩具</a>
+        <a href="sell.html" class="btn-outline-g2g px-8 py-4 text-lg"><i class="fa fa-tag mr-2"></i>我要卖</a>
+      </div>
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
+        <span><i class="fa fa-certificate text-[#3B4CCA] mr-1"></i>PSA / BGS 验卡</span>
+        <span><i class="fa fa-star text-[#FFCB05] mr-1"></i>4.9 分 · 2万+ 评价</span>
+        <span><i class="fa fa-truck text-green-600 mr-1"></i>高值卡顺丰保价</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-10 border-b border-amber-200">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-lg font-bold mb-6 text-[#1D355C]">热门品类</h2>
+      <div class="flex gap-4 overflow-x-auto game-scroll pb-2" id="gameScroll"></div>
+    </div>
+  </section>
+
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-lg font-bold mb-6 text-[#1D355C]">探索分类</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <a href="browse.html?type=cards" class="market-card p-6 text-center hover:border-[#3B4CCA] card-holo">
+          <div class="text-4xl mb-3">⚡</div>
+          <div class="font-bold text-[#1D355C]">TCG 卡牌</div>
+          <div class="text-xs text-slate-500 mt-1">PSA · BGS · 未拆盒</div>
+        </a>
+        <a href="browse.html?type=toys" class="market-card p-6 text-center hover:border-[#78C850]">
+          <div class="text-4xl mb-3">👻</div>
+          <div class="font-bold text-[#1D355C]">实体玩具</div>
+          <div class="text-xs text-slate-500 mt-1">玩偶 · 手办 · 模型</div>
+        </a>
+        <a href="browse.html?type=account" class="market-card p-6 text-center hover:border-[#3B4CCA]">
+          <i class="fa fa-user text-3xl text-[#3B4CCA] mb-3"></i>
+          <div class="font-bold">游戏账号</div>
+          <div class="text-xs text-slate-500 mt-1">成品号 · 高练度</div>
+        </a>
+        <a href="browse.html?type=items" class="market-card p-6 text-center hover:border-[#3B4CCA]">
+          <i class="fa fa-diamond text-3xl text-[#FFCB05] mb-3"></i>
+          <div class="font-bold">道具 / 素材</div>
+          <div class="text-xs text-slate-500 mt-1">皮肤 · MOD · 源码</div>
+        </a>
+        <a href="../index.html#legacy-guarantee" class="market-card p-6 text-center legacy-banner">
+          <i class="fa fa-heart text-3xl text-[#E3350D] mb-3"></i>
+          <div class="font-bold">安心计划</div>
+          <div class="text-xs text-slate-500 mt-1">高值收藏加保</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-[#EFF6FF] border-y border-amber-100">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-lg font-bold text-[#1D355C]"><span class="text-[#FFCB05]">⚡</span> 热门宝可梦卡牌</h2>
+        <a href="browse.html?game=pokemon&type=cards" class="text-[#3B4CCA] text-sm hover:underline font-medium">查看全部 →</a>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="pokemonGrid"></div>
+    </div>
+  </section>
+
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-lg font-bold text-[#1D355C]">更多热门商品</h2>
+        <a href="browse.html" class="text-[#3B4CCA] text-sm hover:underline">查看全部 →</a>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="trendingGrid"></div>
+    </div>
+  </section>
+
+  <div id="trustSection"></div>
+</main>
+
+<footer class="border-t border-amber-200 py-8 text-center text-sm text-slate-500 bg-white">
+  <p>© 2026 永恒守护科技 · Aeterna Save · <a href="../index.html" class="text-[#3B4CCA] hover:underline">返回主站</a></p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/market.js"></script>
+<script>
+  document.getElementById('header').innerHTML = renderMarketHeader('home');
+  document.getElementById('trustSection').innerHTML = renderTrustSection();
+  document.getElementById('gameScroll').innerHTML = MARKET_GAMES.map(g => `
+    <a href="browse.html?game=${g.id}" class="market-card flex-shrink-0 w-28 p-4 text-center">
+      <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-2 font-bold" style="background:${g.color}22;color:${g.color}">
+        <i class="fa ${g.icon}"></i>
+      </div>
+      <div class="text-xs font-medium truncate">${g.name}</div>
+      <div class="text-xs text-slate-500">${g.offers}</div>
+    </a>
+  `).join('');
+  const pokemonCards = MARKET_PRODUCTS.filter(p => p.game === 'pokemon');
+  document.getElementById('pokemonGrid').innerHTML = pokemonCards.slice(0, 4).map(renderProductCard).join('');
+  document.getElementById('trendingGrid').innerHTML = MARKET_PRODUCTS.filter(p => p.game !== 'pokemon').slice(0, 6).map(renderProductCard).join('');
+  initMobileMenu();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+---
+description: After finishing work, commit and push to Aeterna-Save GitHub repo
+alwaysApply: true
+---
+
+# Aeterna Save auto-sync
+
+When you finish a task that modified this project:
+
+1. Follow `.cursor/skills/yunban-h5-git-sync/SKILL.md`
+2. Run `bash scripts/sync-to-github.sh "message"`
+3. Push to `https://github.com/kacapti5-ai/Aeterna-Save.git` on `main`
+4. Do this automatically — do not wait for the user to ask
+5. Skip only if the user explicitly says not to commit/push

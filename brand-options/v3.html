@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>品牌方案 v3 · 收藏年轻 + 信任高级</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --poke-yellow: #FFCB05;
+      --poke-blue: #3B4CCA;
+      --poke-red: #E3350D;
+      --poke-green: #78C850;
+      --poke-cream: #FFFBEB;
+      --poke-navy: #1D355C;
+      --holo-a: #a78bfa;
+      --holo-b: #7dd3fc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans SC', sans-serif; background: var(--poke-cream); color: var(--poke-navy); line-height: 1.6; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 36px 20px 64px; }
+    h1 { font-size: 1.6rem; font-weight: 900; }
+    .sub { color: #64748b; margin: 8px 0 24px; font-size: 0.9rem; max-width: 680px; }
+    .palette {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .swatch {
+      width: 56px; height: 56px; border-radius: 12px; border: 2px solid rgba(0,0,0,0.06);
+      font-size: 9px; display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 4px; font-weight: 700; color: var(--poke-navy);
+    }
+    .strategy {
+      background: #fff; border: 2px solid var(--poke-yellow);
+      border-radius: 16px; padding: 18px 22px; margin-bottom: 24px; font-size: 0.86rem;
+    }
+    .strategy h2 { font-size: 0.92rem; color: var(--poke-blue); margin-bottom: 8px; }
+    .grid { display: grid; gap: 20px; }
+    @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .card {
+      background: #fff; border-radius: 18px; padding: 24px;
+      border: 2px solid #fde68a; transition: transform 0.15s;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card.top { border-color: var(--poke-blue); box-shadow: 0 8px 28px rgba(59,76,202,0.12); }
+    .badge {
+      font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 999px;
+      display: inline-block; margin-bottom: 12px;
+    }
+    .badge-top { background: var(--poke-yellow); color: var(--poke-navy); }
+    .badge-alt { background: #eff6ff; color: var(--poke-blue); }
+    .name-cn { font-size: 2rem; font-weight: 900; letter-spacing: 0.1em; }
+    .name-en { font-size: 0.78rem; color: #64748b; font-weight: 600; margin-top: 2px; }
+    .slogan { font-size: 0.9rem; font-weight: 700; color: var(--poke-blue); margin: 10px 0 12px; }
+    .desc { font-size: 0.82rem; color: #64748b; margin-bottom: 14px; }
+    .logo-area { border-radius: 14px; padding: 20px; margin-bottom: 14px; }
+    .logo-area.cream { background: var(--poke-cream); border: 1px solid #fde68a; }
+    .logo-area.white { background: #fff; border: 1px solid #e2e8f0; }
+    .logo-area.blue { background: linear-gradient(135deg, #3B4CCA, #1D355C); }
+    .logo-flex { display: flex; align-items: center; gap: 14px; }
+    .wm-cn { font-size: 1.3rem; font-weight: 900; }
+    .wm-en { font-size: 0.62rem; letter-spacing: 0.06em; opacity: 0.75; }
+    .meta { list-style: none; font-size: 0.8rem; color: #64748b; }
+    .meta li { padding: 2px 0; }
+    .ok { color: #15803d; }
+    footer { text-align: center; margin-top: 32px; font-size: 0.78rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>品牌方案 v3 · 基调不变</h1>
+  <p class="sub">保留网站宝可梦收藏感（黄/蓝/红/奶油底），Logo 与名字加入<strong>盾、验真、holo 光边</strong>做信任与高级；电子遗产内核用「续 / 光 / 星」表达延续，不用「遗」字。</p>
+
+  <div class="palette">
+    <div class="swatch" style="background:#FFCB05">黄</div>
+    <div class="swatch" style="background:#3B4CCA;color:#fff">蓝</div>
+    <div class="swatch" style="background:#E3350D;color:#fff">红</div>
+    <div class="swatch" style="background:#FFFBEB"> cream </div>
+    <div class="swatch" style="background:linear-gradient(135deg,#FFCB05,#3B4CCA,#a78bfa);color:#fff">holo</div>
+  </div>
+
+  <div class="strategy">
+    <h2>Logo 怎么「年轻 + 信任」同时成立</h2>
+    <p><strong>形状年轻：</strong>圆角、卡牌轮廓、星星/闪光 → 收藏 & TCG</p>
+    <p><strong>符号信任：</strong>盾形外框、验真勾、微光 holo 边 → 高级 & 平台感（不是幼态 emoji 球）</p>
+    <p><strong>色不改动：</strong>黄为主标填充，蓝为盾/字，红仅高价值点缀；藏青只用于文字，不抢画面</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- 星续 -->
+    <div class="card top">
+      <span class="badge badge-top">首选 A · 年轻 + 延续</span>
+      <div class="name-cn">星续</div>
+      <div class="name-en">StarForward</div>
+      <p class="slogan">稀有收藏，安心续传</p>
+      <p class="desc">「星」= 稀有卡 / 闪卡 / 希望感（年轻）；「续」= 数字资产延续与交接。英文 StarForward 积极向前，非遗嘱感。卡牌、玩具、账号都能装。</p>
+      <div class="logo-area cream">
+        <div class="logo-flex">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+            <defs>
+              <linearGradient id="holo1" x1="0" y1="0" x2="54" y2="54">
+                <stop stop-color="#FFCB05"/><stop offset="0.5" stop-color="#7dd3fc"/><stop offset="1" stop-color="#a78bfa"/>
+              </linearGradient>
+            </defs>
+            <rect width="54" height="54" rx="14" fill="#3B4CCA"/>
+            <path d="M27 8L44 16V28C44 37 27 44 27 44C27 44 10 37 10 28V16L27 8Z" fill="#FFCB05" stroke="url(#holo1)" stroke-width="2"/>
+            <path d="M27 16L29 22H35L30 26L32 32L27 28L22 32L24 26L19 22H25L27 16Z" fill="#3B4CCA"/>
+            <path d="M36 12L38 14L36 16" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <div class="wm-cn" style="color:#1D355C">星续</div>
+            <div class="wm-en" style="color:#64748b">StarForward</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-area blue">
+        <div class="logo-flex">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+            <rect width="54" height="54" rx="14" fill="#FFCB05"/>
+            <path d="M27 10L40 17V27C40 34 27 40 27 40C27 40 14 34 14 27V17L27 10Z" fill="#3B4CCA"/>
+            <path d="M27 18L28.5 22H33L29.5 24.5L31 29L27 26.5L23 29L24.5 24.5L21 22H25.5L27 18Z" fill="#FFCB05"/>
+          </svg>
+          <div>
+            <div class="wm-cn" style="color:#fff">星续</div>
+            <div class="wm-en" style="color:#94a3b8">StarForward</div>
+          </div>
+        </div>
+      </div>
+      <ul class="meta">
+        <li class="ok">✓ 最贴现有黄蓝网站，Logo 可直接进导航</li>
+        <li class="ok">✓ 「续」点题电子遗产，「星」点题收藏</li>
+        <li><b>公司名：</b>北京星续科技有限公司</li>
+      </ul>
+    </div>
+
+    <!-- 集光 -->
+    <div class="card top">
+      <span class="badge badge-top">首选 B · 高级 + 收藏</span>
+      <div class="name-cn">集光</div>
+      <div class="name-en">CollectGlow</div>
+      <p class="slogan">让收藏，持续发光</p>
+      <p class="desc">「集」= 卡牌/玩具/账号收藏；「光」= holo 高级闪卡感 + 资产被好好守护后的「仍然发光」。语气暖，不沉重，偏 C 端。</p>
+      <div class="logo-area cream">
+        <div class="logo-flex">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+            <defs>
+              <linearGradient id="holo2" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#fde68a"/><stop offset="0.5" stop-color="#93c5fd"/><stop offset="1" stop-color="#c4b5fd"/>
+              </linearGradient>
+            </defs>
+            <rect width="54" height="54" rx="14" fill="#FFCB05"/>
+            <rect x="12" y="14" width="30" height="38" rx="5" fill="#3B4CCA"/>
+            <rect x="15" y="17" width="24" height="18" rx="3" fill="url(#holo2)"/>
+            <path d="M27 8V14M24 10L27 8L30 10" stroke="#3B4CCA" stroke-width="2" stroke-linecap="round"/>
+            <path d="M20 40L27 36L34 40" stroke="#FFCB05" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+          <div>
+            <div class="wm-cn" style="color:#1D355C">集光</div>
+            <div class="wm-en" style="color:#64748b">CollectGlow</div>
+          </div>
+        </div>
+      </div>
+      <ul class="meta">
+        <li class="ok">✓ 高级感最强（holo 卡 + 档案盒）</li>
+        <li class="ok">✓ 二手市场 & 安心计划都能讲通</li>
+        <li><b>公司名：</b>北京集光数字科技有限公司</li>
+      </ul>
+    </div>
+
+    <!-- 信集 -->
+    <div class="card">
+      <span class="badge badge-alt">备选 · 信任最直接</span>
+      <div class="name-cn">信集</div>
+      <div class="name-en">TrustCollect</div>
+      <p class="slogan">信得过的收藏平台</p>
+      <p class="desc">「信」= 验卡、托管、记录；「集」= 收藏全貌。在黄蓝基调里加信任最直白，略少「延续/遗产」语义，需 Slogan 补。</p>
+      <div class="logo-area white">
+        <div class="logo-flex">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+            <rect width="54" height="54" rx="14" fill="#3B4CCA"/>
+            <circle cx="27" cy="27" r="16" fill="#FFCB05"/>
+            <path d="M21 27L25 31L33 23" stroke="#3B4CCA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="20" y="8" width="14" height="8" rx="2" fill="#FFCB05" opacity="0.9"/>
+          </svg>
+          <div>
+            <div class="wm-cn" style="color:#1D355C">信集</div>
+            <div class="wm-en" style="color:#64748b">TrustCollect</div>
+          </div>
+        </div>
+      </div>
+      <ul class="meta">
+        <li class="ok">✓ 信任感 + 收藏，二字顺口</li>
+        <li><b>公司名：</b>北京信集科技有限公司</li>
+      </ul>
+    </div>
+
+    <!-- 卡伴 -->
+    <div class="card">
+      <span class="badge badge-alt">备选 · 最年轻</span>
+      <div class="name-cn">卡伴</div>
+      <div class="name-en">CardMate</div>
+      <p class="slogan">卡牌有伴，交接有凭</p>
+      <p class="desc">伙伴感最强，适合玩家向；「伴」可延伸到安心计划里「有人帮接」。卡牌导向略强，全品类需副标题。</p>
+      <div class="logo-area cream">
+        <div class="logo-flex">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+            <rect width="54" height="54" rx="14" fill="#FFCB05" stroke="#3B4CCA" stroke-width="2"/>
+            <rect x="14" y="12" width="26" height="34" rx="4" fill="#3B4CCA"/>
+            <rect x="17" y="15" width="20" height="14" rx="2" fill="#FFCB05"/>
+            <circle cx="27" cy="36" r="4" fill="#78C850"/>
+            <path d="M25 36L26.5 37.5L29 35" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <div class="wm-cn" style="color:#1D355C">卡伴</div>
+            <div class="wm-en" style="color:#64748b">CardMate</div>
+          </div>
+        </div>
+      </div>
+      <ul class="meta">
+        <li class="ok">✓ 最贴宝可梦/TCG 气质</li>
+        <li><b>公司名：</b>北京卡伴科技有限公司</li>
+      </ul>
+    </div>
+
+    <!-- 闪集 三字 feel but 2 char -->
+    <div class="card">
+      <span class="badge badge-alt">备选 · TCG 感最强</span>
+      <div class="name-cn">闪集</div>
+      <div class="name-en">ShinyCollect</div>
+      <p class="slogan">闪卡级守护，收藏级安心</p>
+      <p class="desc">Shiny = 闪卡文化，年轻玩家秒懂；集 = 收藏与资产库。英文略长，口语可简称 Shiny。</p>
+      <div class="logo-area cream">
+        <div class="logo-flex">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+            <rect width="54" height="54" rx="14" fill="#1D355C"/>
+            <rect x="13" y="11" width="28" height="36" rx="5" fill="#FFCB05"/>
+            <path d="M20 20H34M20 26H34M20 32H28" stroke="#3B4CCA" stroke-width="2" stroke-linecap="round"/>
+            <path d="M38 14L40 18L44 16L41 20L44 24L40 22L38 26L36 22L32 24L35 20L32 16L36 18L38 14Z" fill="#E3350D"/>
+          </svg>
+          <div>
+            <div class="wm-cn" style="color:#1D355C">闪集</div>
+            <div class="wm-en" style="color:#64748b">ShinyCollect</div>
+          </div>
+        </div>
+      </div>
+      <ul class="meta">
+        <li class="ok">✓ 卡牌二手主线首选</li>
+        <li><b>公司名：</b>北京闪集科技有限公司</li>
+      </ul>
+    </div>
+
+    <!-- 伴续 -->
+    <div class="card">
+      <span class="badge badge-alt">备选 · 遗产语义最柔</span>
+      <div class="name-cn">伴续</div>
+      <div class="name-en">MateForward</div>
+      <p class="slogan">有人陪伴，资产续传</p>
+      <p class="desc">「伴」= 不孤独、平台陪伴；「续」= 电子延续。情感温度最高，专业感靠 Logo 盾形补。</p>
+      <div class="logo-area white">
+        <div class="logo-flex">
+          <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+            <rect width="54" height="54" rx="14" fill="#EFF6FF"/>
+            <path d="M27 9L42 16V28C42 36 27 43 27 43C27 43 12 36 12 28V16L27 9Z" fill="#FFCB05" stroke="#3B4CCA" stroke-width="2"/>
+            <circle cx="22" cy="26" r="5" fill="#3B4CCA" opacity="0.5"/>
+            <circle cx="32" cy="26" r="5" fill="#3B4CCA"/>
+            <path d="M24 26H30" stroke="#FFCB05" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <div class="wm-cn" style="color:#1D355C">伴续</div>
+            <div class="wm-en" style="color:#64748b">MateForward</div>
+          </div>
+        </div>
+      </div>
+      <ul class="meta">
+        <li class="ok">✓ 电子遗产「交接」叙事最暖</li>
+        <li><b>公司名：</b>北京伴续科技有限公司</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    brand-options/v3.html · 基调与现站一致 · 回复 A/B 或组合意向即可全站落地
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我要卖 · Aeterna Save</title>
+  <link rel="stylesheet" href="../css/brand.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/market.css">
+</head>
+<body class="market-body font-sans">
+
+<div id="header"></div>
+
+<main class="pt-20 pb-16">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-2xl md:text-3xl font-bold mb-2">发布游戏资产</h1>
+    <p class="text-slate-500 mb-8">5 步完成上架 · 可选开通数字资产安心计划（像买保险一样简单）</p>
+
+    <!-- Step 5: 进度条 -->
+    <div class="flex justify-between mb-10 text-xs sm:text-sm" id="stepBar">
+      <div class="step-item flex-1 text-center" data-step="1">
+        <div class="w-8 h-8 mx-auto rounded-full border-2 border-gray-600 flex items-center justify-center mb-1 step-circle">1</div>
+        <span class="text-gray-500">选游戏</span>
+      </div>
+      <div class="step-item flex-1 text-center" data-step="2">
+        <div class="w-8 h-8 mx-auto rounded-full border-2 border-gray-600 flex items-center justify-center mb-1 step-circle">2</div>
+        <span class="text-gray-500">填信息</span>
+      </div>
+      <div class="step-item flex-1 text-center" data-step="3">
+        <div class="w-8 h-8 mx-auto rounded-full border-2 border-gray-600 flex items-center justify-center mb-1 step-circle">3</div>
+        <span class="text-gray-500">验号</span>
+      </div>
+      <div class="step-item flex-1 text-center" data-step="4">
+        <div class="w-8 h-8 mx-auto rounded-full border-2 border-gray-600 flex items-center justify-center mb-1 step-circle">4</div>
+        <span class="text-gray-500">定价</span>
+      </div>
+      <div class="step-item flex-1 text-center" data-step="5">
+        <div class="w-8 h-8 mx-auto rounded-full border-2 border-gray-600 flex items-center justify-center mb-1 step-circle">5</div>
+        <span class="text-gray-500">上架</span>
+      </div>
+    </div>
+
+    <div class="market-card p-6 md:p-8">
+      <!-- Step 1 -->
+      <div class="sell-step" data-step="1">
+        <h2 class="font-bold text-lg mb-4">选择游戏</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="gamePick"></div>
+        <input type="hidden" id="selectedGame" value="">
+      </div>
+
+      <!-- Step 2 -->
+      <div class="sell-step hidden" data-step="2">
+        <h2 class="font-bold text-lg mb-4">填写资产信息</h2>
+        <div class="space-y-4 text-sm">
+          <div>
+            <label class="block text-gray-400 mb-1">出售类型</label>
+            <select id="sellType" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-slate-700">
+              <option value="account">游戏账号</option>
+              <option value="items">道具 / 饰品</option>
+              <option value="materials">游戏素材 / MOD</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">标题</label>
+            <input type="text" id="sellTitle" placeholder="例：V10 全皮肤 王者50星" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-slate-700">
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">区服</label>
+            <input type="text" id="sellServer" placeholder="微信区 / 艾欧尼亚 / Steam" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-slate-700">
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">资产描述</label>
+            <textarea id="sellDesc" rows="4" placeholder="皮肤、等级、装备、素材清单..." class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-slate-700"></textarea>
+          </div>
+          <div class="legacy-banner rounded-lg p-4">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="sellLegacy" class="mt-1">
+              <span>
+                <span class="font-medium text-pink-600">同步开通数字资产安心计划</span>
+                <span class="block text-xs text-slate-500 mt-1">上架同时建立记录；可另办<a href="../index.html#legacy-guarantee" class="text-amber-600 hover:underline">香港保险加保</a></span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="sell-step hidden" data-step="3">
+        <h2 class="font-bold text-lg mb-4">官方验号</h2>
+        <p class="text-sm text-gray-400 mb-6">提交账号后，平台将安排登录验号录屏，确保买家看到真实资产</p>
+        <div class="space-y-4 text-sm">
+          <div class="market-card p-4 border-dashed border-gray-600">
+            <p class="text-gray-400 mb-2"><i class="fa fa-upload text-orange-400 mr-1"></i> 上传验号材料（演示）</p>
+            <ul class="text-xs text-gray-500 space-y-1">
+              <li>• 登录录屏（推荐）</li>
+              <li>• 装备 / 库存截图</li>
+              <li>• 实名与绑定状态说明</li>
+            </ul>
+          </div>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" id="agreeVerify" class="rounded">
+            <span class="text-gray-400">我同意平台登录验号，并保证信息真实</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="sell-step hidden" data-step="4">
+        <h2 class="font-bold text-lg mb-4">定价</h2>
+        <div class="space-y-4 text-sm">
+          <div>
+            <label class="block text-gray-400 mb-1">出售价格（元）</label>
+            <input type="number" id="sellPrice" placeholder="2888" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-slate-700 text-xl">
+          </div>
+            <div class="market-card p-4 bg-[#FFFBEB] border-2 border-[#FFCB05]">
+            <p class="text-gray-400 mb-2">AI 智能估价参考（演示）</p>
+            <p class="text-orange-400 text-2xl font-bold">¥2,400 – ¥3,200</p>
+            <p class="text-xs text-gray-500 mt-2">基于同服同类成交记录 · 可在区间内自主定价</p>
+          </div>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" id="sellCompensation" checked class="rounded">
+            <span class="text-gray-400">开通 110% 找回包赔（+5% 服务费，提升成交率）</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="sell-step hidden" data-step="5">
+        <h2 class="font-bold text-lg mb-4">确认上架</h2>
+        <div id="sellSummary" class="space-y-3 text-sm mb-6"></div>
+        <div class="legacy-banner rounded-lg p-4 mb-6 text-sm">
+          <p class="text-[#3B4CCA] font-medium mb-1"><i class="fa fa-link mr-1"></i> 上架后自动完成</p>
+          <ul class="text-gray-400 text-xs space-y-1">
+            <li>• 商品进入市场列表，Escrow 托管就绪，<strong class="text-gray-300">全程交易记录永久留存</strong></li>
+            <li>• 验号报告留存，可作日后安心计划交易依据</li>
+            <li>• 若勾选安心计划：资产写入关联图谱，可搭配香港保险</li>
+          </ul>
+        </div>
+        <div id="sellSuccess" class="hidden text-center py-8">
+          <i class="fa fa-check-circle text-5xl text-green-500 mb-4"></i>
+          <h3 class="text-xl font-bold mb-2">上架成功！</h3>
+          <p class="text-gray-400 mb-6">您的商品已发布到市场</p>
+          <a href="browse.html" class="btn-g2g inline-block px-6 py-3">查看市场</a>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-8 pt-6 border-t border-gray-800" id="sellNav">
+        <button type="button" id="btnPrev" class="btn-outline-g2g px-6 py-2.5 text-gray-400 hidden">上一步</button>
+        <div class="flex-1"></div>
+        <button type="button" id="btnNext" class="btn-g2g px-8 py-2.5">下一步</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+  <a href="index.html" class="text-orange-400 hover:underline">← 返回市场首页</a>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/market.js"></script>
+<script>
+  document.getElementById('header').innerHTML = renderMarketHeader('sell');
+  initMobileMenu();
+
+  let currentStep = 1;
+  const selectedGameName = {};
+
+  document.getElementById('gamePick').innerHTML = MARKET_GAMES.map(g => `
+    <button type="button" class="game-pick market-card p-4 text-center hover:border-orange-500 transition" data-id="${g.id}">
+      <div class="text-2xl mb-1" style="color:${g.color}"><i class="fa ${g.icon}"></i></div>
+      <div class="text-xs font-medium">${g.name}</div>
+    </button>
+  `).join('');
+
+  document.querySelectorAll('.game-pick').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.game-pick').forEach(b => b.classList.remove('border-orange-500'));
+      btn.classList.add('border-orange-500');
+      document.getElementById('selectedGame').value = btn.dataset.id;
+      selectedGameName.id = btn.dataset.id;
+      selectedGameName.name = btn.querySelector('.font-medium, .text-xs.font-medium')?.textContent || MARKET_GAMES.find(x => x.id === btn.dataset.id)?.name;
+    });
+  });
+
+  function updateStepUI() {
+    document.querySelectorAll('.sell-step').forEach(el => {
+      el.classList.toggle('hidden', Number(el.dataset.step) !== currentStep);
+    });
+    document.querySelectorAll('.step-item').forEach(el => {
+      const s = Number(el.dataset.step);
+      const circle = el.querySelector('.step-circle');
+      circle.classList.remove('step-active', 'step-done', 'border-orange-500', 'border-green-500', 'text-orange-400', 'text-green-500');
+      if (s < currentStep) {
+        circle.classList.add('step-done', 'border-green-500', 'text-green-500');
+        circle.innerHTML = '<i class="fa fa-check"></i>';
+      } else if (s === currentStep) {
+        circle.classList.add('step-active', 'border-orange-500', 'text-orange-400');
+        circle.textContent = s;
+      } else {
+        circle.textContent = s;
+      }
+    });
+    document.getElementById('btnPrev').classList.toggle('hidden', currentStep === 1);
+    document.getElementById('btnNext').textContent = currentStep === 5 ? '确认上架' : '下一步';
+    if (currentStep === 5) buildSummary();
+  }
+
+  function buildSummary() {
+    const game = MARKET_GAMES.find(g => g.id === document.getElementById('selectedGame').value);
+    const legacy = document.getElementById('sellLegacy').checked;
+    document.getElementById('sellSummary').innerHTML = `
+      <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">游戏</span><span>${game?.name || '—'}</span></div>
+      <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">标题</span><span class="text-right max-w-[60%]">${document.getElementById('sellTitle').value || '—'}</span></div>
+      <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">区服</span><span>${document.getElementById('sellServer').value || '—'}</span></div>
+      <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">价格</span><span class="text-orange-400 font-bold">¥${Number(document.getElementById('sellPrice').value || 0).toLocaleString()}</span></div>
+      <div class="flex justify-between py-2"><span class="text-slate-500">安心计划</span><span class="${legacy ? 'text-pink-600' : 'text-slate-400'}">${legacy ? '已开通' : '未开通'}</span></div>
+    `;
+  }
+
+  document.getElementById('btnPrev').addEventListener('click', () => {
+    if (currentStep > 1) { currentStep--; updateStepUI(); }
+  });
+
+  document.getElementById('btnNext').addEventListener('click', () => {
+    if (currentStep === 1 && !document.getElementById('selectedGame').value) {
+      alert('请先选择游戏'); return;
+    }
+    if (currentStep === 3 && !document.getElementById('agreeVerify').checked) {
+      alert('请同意验号协议'); return;
+    }
+    if (currentStep === 5) {
+      document.getElementById('sellSummary').classList.add('hidden');
+      document.getElementById('sellNav').classList.add('hidden');
+      document.getElementById('sellSuccess').classList.remove('hidden');
+      return;
+    }
+    if (currentStep < 5) { currentStep++; updateStepUI(); }
+  });
+
+  updateStepUI();
+</script>
+</body>
+</html>

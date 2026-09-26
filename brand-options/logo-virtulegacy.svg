@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <!-- 虚宝传承 · 静色版：平面线面，无渐变无装饰 -->
+  <rect width="512" height="512" rx="64" fill="#1D355C"/>
+  <path d="M256 96L368 152V280C368 352 256 400 256 400C256 400 144 352 144 280V152L256 96Z" stroke="#FFFFFF" stroke-width="16" fill="none" stroke-linejoin="round"/>
+  <path d="M256 96L368 152V280C368 352 256 400 256 400C256 400 144 352 144 280V152L256 96Z" fill="#FFFFFF" fill-opacity="0.06"/>
+  <rect x="196" y="220" width="120" height="88" rx="4" fill="#FFCB05"/>
+  <path d="M196 252H316" stroke="#1D355C" stroke-width="6"/>
+  <path d="M228 292H284" stroke="#1D355C" stroke-width="6" stroke-linecap="round"/>
+</svg>

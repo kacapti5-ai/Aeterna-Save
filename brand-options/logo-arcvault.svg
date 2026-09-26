@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <!-- 典藏 · 静色版：档案柜线框，单色块 -->
+  <rect width="512" height="512" rx="64" fill="#FFFFFF"/>
+  <rect x="1" y="1" width="510" height="510" rx="63" stroke="#E2E8F0" stroke-width="2"/>
+  <rect x="144" y="128" width="224" height="288" rx="8" stroke="#1D355C" stroke-width="14" fill="none"/>
+  <rect x="176" y="168" width="160" height="120" rx="4" fill="#3B4CCA" fill-opacity="0.12"/>
+  <path d="M176 168H336" stroke="#1D355C" stroke-width="8"/>
+  <path d="M176 288H336" stroke="#1D355C" stroke-width="8"/>
+  <rect x="224" y="328" width="64" height="56" rx="4" fill="#FFCB05"/>
+  <path d="M244 356L256 368L268 356" stroke="#1D355C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

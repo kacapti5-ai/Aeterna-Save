@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品详情 · Aeterna Save</title>
+  <link rel="stylesheet" href="../css/brand.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/market.css">
+</head>
+<body class="market-body font-sans">
+
+<div id="header"></div>
+
+<main class="pt-20 pb-16" id="mainContent">
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <a href="browse.html" class="text-sm text-gray-500 hover:text-orange-400 mb-6 inline-block"><i class="fa fa-arrow-left mr-1"></i>返回列表</a>
+    <div id="notFound" class="hidden text-center py-20 text-gray-500">商品不存在</div>
+    <div id="productDetail" class="hidden">
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- 左侧：验号区 -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="market-card overflow-hidden">
+            <div class="product-thumb flex items-center justify-center text-8xl min-h-[240px]" id="pImage"></div>
+            <div class="p-4 border-t border-amber-200 flex items-center gap-2 text-sm text-slate-500">
+              <i class="fa fa-certificate text-[#3B4CCA]" id="pVerifyIcon"></i>
+              <span id="pVerify"></span>
+            </div>
+          </div>
+          <div class="market-card p-6">
+            <h3 class="font-bold mb-4 flex items-center gap-2 text-[#1D355C]" id="pMediaTitle"><i class="fa fa-play-circle text-[#3B4CCA]"></i> 官方验号录屏</h3>
+            <div class="aspect-video bg-[#EFF6FF] rounded-lg flex items-center justify-center border-2 border-amber-200" id="pMediaBox">
+              <div class="text-center text-slate-500">
+                <i class="fa fa-film text-4xl mb-2 text-[#3B4CCA]"></i>
+                <p class="text-sm" id="pMediaDesc">验号录屏预览（演示占位）</p>
+                <p class="text-xs mt-1" id="pMediaSteps">登录 → 装备清单 → 实名状态 → 绑定信息</p>
+              </div>
+            </div>
+          </div>
+          <!-- 装备/资产清单 -->
+          <div class="market-card p-6">
+            <h3 class="font-bold mb-4">资产清单</h3>
+            <ul class="space-y-2 text-sm" id="pItems"></ul>
+          </div>
+          <!-- 素材关联 + 电子遗产 -->
+          <div class="market-card p-6 legacy-banner" id="pLegacyBlock">
+            <h3 class="font-bold mb-3 text-pink-600"><i class="fa fa-heart mr-2"></i>安心计划 & 素材关联</h3>
+            <p class="text-sm text-slate-500 mb-3">卖家已开通<strong class="text-slate-700">数字资产安心计划</strong>；在本平台的买卖、验号均有<strong class="text-slate-700">永久交易记录</strong>，未来家人可查依据，像翻保单一样清楚。</p>
+            <div class="rounded-lg bg-[#FFFBEB] border-2 border-[#FFCB05] p-4 mb-4 text-sm">
+              <p class="text-[#3B4CCA] font-medium mb-2"><i class="fa fa-list-alt mr-1"></i> 平台交易依据包含</p>
+              <ul class="text-slate-500 text-xs space-y-1">
+                <li>• 订单流水 · 金额 · 成交时间</li>
+                <li>• 官方验号报告与资产清单快照</li>
+                <li>• Escrow 托管与过户节点记录</li>
+              </ul>
+            </div>
+            <ul class="text-sm space-y-1 text-slate-600 mb-3" id="pLinked"></ul>
+            <p class="text-xs text-slate-400 mb-3">
+              <i class="fa fa-institution text-amber-500 mr-1"></i>
+              可搭配<a href="../index.html#legacy-guarantee" class="text-amber-600 hover:underline">香港保险自愿加保</a>，像多买一份保障。
+            </p>
+            <a href="../index.html#materials" class="inline-block text-[#3B4CCA] text-sm hover:underline">了解素材关联图谱 →</a>
+          </div>
+        </div>
+
+        <!-- 右侧：购买栏 Step 4 -->
+        <div class="lg:col-span-1">
+          <div class="market-card p-6 sticky top-24">
+            <div class="text-xs text-gray-500 mb-1"><span id="pGame"></span> · <span id="pType"></span></div>
+            <h1 class="text-lg font-bold mb-4 leading-snug" id="pTitle"></h1>
+            <div class="text-3xl font-bold text-[#E3350D] mb-4" id="pPriceWrap">¥<span id="pPrice"></span></div>
+            <p class="text-sm text-gray-500 mb-4"><i class="fa fa-server mr-1"></i><span id="pServer"></span></p>
+            <div class="flex flex-wrap gap-2 mb-6" id="pBadges"></div>
+
+            <!-- 卖家信用 -->
+            <div class="border-t border-amber-200 pt-4 mb-6">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#FFCB05]/40 flex items-center justify-center text-[#1D355C] font-bold" id="pSellerInitial"></div>
+                <div>
+                  <div class="font-medium" id="pSeller"></div>
+                  <div class="text-xs text-gray-500"><i class="fa fa-star text-yellow-500"></i> <span id="pRating"></span> · <span id="pOrders"></span> 笔成交</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-sm text-gray-400 mb-6"><i class="fa fa-clock-o text-orange-400 mr-1"></i>预计 <span id="pDelivery"></span> 交付</p>
+
+            <button type="button" class="btn-g2g w-full py-3 text-lg mb-3"><i class="fa fa-shopping-cart mr-2"></i>立即购买 · Escrow 托管</button>
+            <button type="button" class="btn-outline-g2g w-full py-3 mb-4"><i class="fa fa-comments mr-2"></i>联系卖家</button>
+
+            <div class="text-xs text-slate-500 space-y-2 border-t border-amber-200 pt-4">
+              <p><i class="fa fa-lock text-[#3B4CCA] mr-1"></i>付款后资金托管，确认收货后放款</p>
+              <p><i class="fa fa-list-alt text-[#3B4CCA] mr-1"></i>本平台成交均留永久交易记录，可作安心计划依据</p>
+              <p><i class="fa fa-umbrella text-yellow-500 mr-1"></i>可选 110% 找回包赔（+5% 保费）</p>
+              <p><i class="fa fa-institution text-amber-500 mr-1"></i>安心计划可<a href="../index.html#legacy-guarantee" class="text-amber-600 hover:underline">搭配香港保险加保</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+  <a href="browse.html" class="text-orange-400 hover:underline">← 继续浏览</a>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/market.js"></script>
+<script>
+  document.getElementById('header').innerHTML = renderMarketHeader('browse');
+  initMobileMenu();
+
+  const id = new URLSearchParams(location.search).get('id');
+  const p = getProduct(id);
+
+  if (!p) {
+    document.getElementById('notFound').classList.remove('hidden');
+  } else {
+    document.getElementById('productDetail').classList.remove('hidden');
+    document.title = p.title + ' · Aeterna Save';
+    document.getElementById('pImage').textContent = p.image;
+    if (p.type === 'cards') document.getElementById('pImage').classList.add('card-thumb');
+    document.getElementById('pVerify').textContent = p.verifyNote;
+
+    if (p.type === 'cards') {
+      document.getElementById('pMediaTitle').innerHTML = '<i class="fa fa-search text-[#3B4CCA]"></i> 验卡报告 & 开箱录像';
+      document.getElementById('pMediaDesc').textContent = 'PSA/BGS 官网验真 + 显微镜验卡（演示占位）';
+      document.getElementById('pMediaSteps').textContent = '官网编号 → 评级分数 → 中心ing → 封壳状态';
+      document.getElementById('pVerifyIcon').className = 'fa fa-certificate text-[#3B4CCA]';
+    } else if (p.type === 'toys') {
+      document.getElementById('pMediaTitle').innerHTML = '<i class="fa fa-camera text-[#78C850]"></i> 品相报告 & 吊牌验真';
+      document.getElementById('pMediaDesc').textContent = '正版吊牌防伪 + 品相实拍（演示占位）';
+      document.getElementById('pMediaSteps').textContent = '吊牌 → 包装 → 品相 → 购买凭证';
+      document.getElementById('pVerifyIcon').className = 'fa fa-gift text-[#78C850]';
+    }
+
+    if (p.price < 10000) document.getElementById('pPriceWrap').className = 'text-3xl font-bold text-[#3B4CCA] mb-4';
+    document.getElementById('pGame').textContent = p.gameName;
+    document.getElementById('pType').textContent = p.typeLabel;
+    document.getElementById('pTitle').textContent = p.title;
+    document.getElementById('pPrice').textContent = p.price.toLocaleString();
+    document.getElementById('pServer').textContent = p.server;
+    document.getElementById('pSeller').textContent = p.seller;
+    document.getElementById('pSellerInitial').textContent = p.seller[0];
+    document.getElementById('pRating').textContent = p.sellerRating;
+    document.getElementById('pOrders').textContent = p.sellerOrders;
+    document.getElementById('pDelivery').textContent = p.delivery;
+
+    const badges = [];
+    if (p.verified) badges.push('<span class="badge-verified text-xs px-2 py-1 rounded">' + (p.type === 'cards' ? '验卡' : '官方验号') + '</span>');
+    if (p.escrow) badges.push('<span class="badge-escrow text-xs px-2 py-1 rounded">资金托管</span>');
+    if (p.compensation) badges.push('<span class="badge-compensation text-xs px-2 py-1 rounded">110%包赔</span>');
+    if (p.legacy) badges.push('<span class="badge-legacy text-xs px-2 py-1 rounded">安心计划 · ' + p.legacyPlan + '</span>');
+    document.getElementById('pBadges').innerHTML = badges.join('');
+
+    document.getElementById('pItems').innerHTML = p.items.map(i => `<li class="flex items-start gap-2"><i class="fa fa-check text-green-500 mt-1"></i><span>${i}</span></li>`).join('');
+
+    const legacyBlock = document.getElementById('pLegacyBlock');
+    if (p.legacy || p.linkedAssets.length) {
+      document.getElementById('pLinked').innerHTML = p.linkedAssets.map(a => `<li>• ${a}</li>`).join('') ||
+        '<li>• 暂无关联素材，可在购买后登记</li>';
+    } else {
+      legacyBlock.classList.add('opacity-60');
+      document.getElementById('pLinked').innerHTML = '<li>• 卖家未登记安心计划；在本平台成交后仍将生成完整交易记录</li>';
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="永恒守护科技 Aeterna Save - 游戏账号、卡牌、线上资产的存储、流通与安心传续。你的游戏人生，永不落幕。">
+    <meta name="keywords" content="永恒守护,Aeterna Save,游戏资产,数字资产安心,卡牌,账号交易">
+    <title>永恒守护科技 · Aeterna Save</title>
+    <link rel="stylesheet" href="css/brand.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FFCB05',
+                        secondary: '#3B4CCA',
+                        sunny: '#FFCB05',
+                        sky: '#3B4CCA',
+                        coral: '#E3350D',
+                        accent: '#78C850',
+                        lightgray: '#FFFBEB',
+                        ink: '#1D355C'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow { text-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+            .card-shadow { box-shadow: 0 4px 24px rgba(15, 52, 96, 0.12); }
+            .game-glow { box-shadow: 0 8px 28px rgba(59, 76, 202, 0.12); }
+            .hero-soft {
+                background: linear-gradient(135deg, #fff9e6 0%, #dbeafe 50%, #fef9c3 100%);
+            }
+        }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="brand-body bg-lightgray font-sans text-ink">
+
+<!-- 导航栏 -->
+<header class="brand-nav fixed w-full z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="#home" class="flex items-center gap-3 min-w-0">
+            <img src="static/img/logo-mark.png" alt="Aeterna Save" class="h-11 w-auto max-h-11 object-contain shrink-0 bg-white">
+            <div>
+                <div class="text-lg md:text-xl font-bold text-[#1E58E0] leading-tight tracking-wide">Aeterna Save</div>
+                <div class="text-[10px] text-slate-400 hidden sm:block">永恒守护科技 · 永不落幕</div>
+            </div>
+        </a>
+        <nav class="hidden lg:flex gap-5 text-sm text-slate-600">
+            <a href="#home" class="hover:text-primary transition">首页</a>
+            <a href="market/index.html" class="hover:text-secondary transition text-secondary font-medium">资产市场</a>
+            <a href="#collectibles" class="hover:text-secondary transition text-coral font-medium">卡牌 & 玩具</a>
+            <a href="#game-assets" class="hover:text-secondary transition">游戏资产</a>
+            <a href="#resell" class="hover:text-primary transition">转卖</a>
+            <a href="#materials" class="hover:text-primary transition">素材库</a>
+            <a href="#security" class="hover:text-primary transition">安心保障</a>
+            <a href="#process" class="hover:text-primary transition">怎么玩</a>
+            <a href="#price" class="hover:text-primary transition">套餐</a>
+            <a href="#contact" class="hover:text-primary transition">联系</a>
+        </nav>
+        <button type="button" class="lg:hidden text-2xl text-ink" id="menuBtn" aria-label="打开菜单">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 px-4 pb-4">
+        <nav class="flex flex-col gap-3 text-slate-600">
+            <a href="#home" class="hover:text-primary py-1">首页</a>
+            <a href="market/index.html" class="hover:text-secondary py-1 text-secondary">资产市场</a>
+            <a href="#collectibles" class="hover:text-secondary py-1 text-coral">卡牌 & 玩具</a>
+            <a href="#game-assets" class="hover:text-secondary py-1">游戏资产</a>
+            <a href="#resell" class="hover:text-primary py-1">转卖</a>
+            <a href="#materials" class="hover:text-primary py-1">素材库</a>
+            <a href="#market" class="hover:text-primary py-1">玩家社区</a>
+            <a href="#security" class="hover:text-primary py-1">安心保障</a>
+            <a href="#process" class="hover:text-primary py-1">怎么玩</a>
+            <a href="#price" class="hover:text-primary py-1">套餐</a>
+            <a href="#contact" class="hover:text-primary py-1">联系</a>
+        </nav>
+    </div>
+</header>
+
+<!-- 首屏 -->
+<section id="home" class="brand-hero pt-24 md:pt-32 pb-16 md:pb-24 hero-soft relative">
+    <div class="brand-hero-blob-1 absolute w-64 h-64 rounded-full bg-primary/10 blur-3xl top-20 right-10"></div>
+    <div class="brand-hero-blob-2 absolute w-48 h-48 rounded-full bg-secondary/15 blur-3xl bottom-10 left-10"></div>
+    <div class="container mx-auto px-4 relative">
+        <div class="inline-flex items-center gap-2 bg-white/90 border-2 border-[#FFCB05] rounded-full px-4 py-1.5 text-xs mb-6 text-slate-600 shadow-sm">
+            存储 · 流通 · 传续 · 像买保险一样简单
+        </div>
+        <h1 class="text-[28px] md:text-[44px] font-bold mb-4 leading-tight text-ink">
+            你的游戏人生，<span class="text-secondary">永不落幕</span>
+        </h1>
+        <p class="text-lg md:text-xl mb-3 text-slate-600">永恒守护科技 · Aeterna Save</p>
+        <p class="mb-8 text-sm md:text-base max-w-3xl text-slate-500">
+            今天的转卖托管，就是未来的安心交接——<strong class="text-primary font-medium">数字资产安心计划</strong>不是焦虑提醒，而是像游戏装备保险一样，提前帮你在平台留好记录、配好保障。
+        </p>
+        <div class="flex flex-wrap gap-2 mb-10">
+            <span class="brand-pill bg-white shadow-sm"><i class="fa fa-shield text-secondary"></i>找回包赔</span>
+            <span class="brand-pill bg-white shadow-sm"><i class="fa fa-smile-o text-primary"></i>轻松无负担</span>
+            <span class="brand-pill bg-white shadow-sm"><i class="fa fa-check-circle text-sky"></i>官方验号</span>
+            <span class="brand-pill bg-white shadow-sm"><i class="fa fa-heart text-coral"></i>未来安心计划</span>
+        </div>
+        <div class="flex flex-wrap gap-4">
+            <a href="market/browse.html?type=cards" class="btn-brand px-8 py-3.5">逛逛卡牌市场</a>
+            <a href="market/browse.html?type=toys" class="btn-brand-outline px-8 py-3.5">实体玩具</a>
+            <a href="market/sell.html" class="btn-brand-outline px-8 py-3.5">卖号 / 卖卡</a>
+            <a href="#security" class="px-6 py-3.5 text-primary text-sm hover:underline">了解安心保障 →</a>
+        </div>
+    </div>
+</section>
+
+<!-- 卡牌 & 实体玩具 -->
+<section id="collectibles" class="py-16 bg-white border-y-4 border-[#FFCB05]">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+            <div>
+                <p class="text-secondary text-sm font-semibold mb-2"><i class="fa fa-star mr-1"></i> 重磅上新 · 实体收藏</p>
+                <h2 class="text-[24px] md:text-[32px] font-bold text-ink border-l-4 border-[#FFCB05] pl-3">宝可梦卡牌 & 实体玩具</h2>
+                <p class="text-slate-500 mt-3 max-w-2xl">宝可梦 TCG 卡牌行情持续走高，高罕卡、评级卡、未拆封盒都是硬通货。平台提供 PSA/BGS 验卡、正版玩具溯源，高值收藏也可搭配安心计划与香港保险加保。</p>
+            </div>
+            <a href="market/browse.html?type=cards" class="btn-brand px-6 py-3 shrink-0">进入卡牌市场 →</a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <a href="market/browse.html?type=cards" class="card-holo p-6 rounded-2xl card-shadow hover:game-glow transition block">
+                <div class="text-4xl mb-3">⚡</div>
+                <h3 class="font-bold text-secondary mb-2">评级卡牌</h3>
+                <p class="text-sm text-slate-600 mb-3">PSA / BGS 验真，高罕 SAR、VMAX、老卡全面覆盖</p>
+                <p class="text-xs text-coral font-semibold">热门 · 皮卡丘 / 喷火龙 / 151 系列</p>
+            </a>
+            <a href="market/browse.html?type=cards" class="brand-card p-6 card-rare hover:game-glow transition block">
+                <div class="text-4xl mb-3">📦</div>
+                <h3 class="font-bold text-secondary mb-2">未拆封盒 / 补充包</h3>
+                <p class="text-sm text-slate-600 mb-3">原箱溯源、封条验真，整盒投资与开盒乐趣两不误</p>
+                <p class="text-xs text-slate-500">151 · SV · 日版 / 简中</p>
+            </a>
+            <a href="market/browse.html?type=toys" class="brand-card p-6 hover:game-glow transition block border-t-4 border-accent">
+                <div class="text-4xl mb-3">👻</div>
+                <h3 class="font-bold text-secondary mb-2">实体玩偶 & 手办</h3>
+                <p class="text-sm text-slate-600 mb-3">Pokemon Center 正版、吊牌防伪、品相报告</p>
+                <p class="text-xs text-slate-500">plush · 拼装模型 · 限定周边</p>
+            </a>
+            <a href="market/sell.html" class="brand-card p-6 hover:game-glow transition block border-t-4 border-coral">
+                <div class="text-4xl mb-3">💰</div>
+                <h3 class="font-bold text-secondary mb-2">我要卖卡 / 卖玩具</h3>
+                <p class="text-sm text-slate-600 mb-3">拍照上架 → 验卡验真 → 托管交易 → 安心放款</p>
+                <p class="text-xs text-secondary">5 步完成 · 高值卡专人对接</p>
+            </a>
+        </div>
+
+        <!-- 热门卡牌预览 -->
+        <h3 class="font-bold text-lg text-ink mb-4 flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-[#FFCB05]"></span> 热门在售
+        </h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="homeCardGrid">
+            <a href="market/product.html?id=p007" class="brand-card p-4 hover:game-glow transition block">
+                <div class="card-holo rounded-xl flex items-center justify-center text-4xl h-24 mb-3">⚡</div>
+                <p class="text-xs text-slate-500">PSA 10 · 简中 SV</p>
+                <h4 class="font-bold text-sm text-ink mt-1 line-clamp-2">皮卡丘 VMAX · PSA 10</h4>
+                <p class="text-[#E3350D] font-bold mt-2">¥12,800</p>
+            </a>
+            <a href="market/product.html?id=p010" class="brand-card p-4 hover:game-glow transition block">
+                <div class="card-holo rounded-xl flex items-center justify-center text-4xl h-24 mb-3">🔥</div>
+                <p class="text-xs text-slate-500">BGS 9.5 · 日版 151</p>
+                <h4 class="font-bold text-sm text-ink mt-1 line-clamp-2">喷火龙 ex SAR · BGS 9.5</h4>
+                <p class="text-[#E3350D] font-bold mt-2">¥45,600</p>
+            </a>
+            <a href="market/product.html?id=p008" class="brand-card p-4 hover:game-glow transition block">
+                <div class="rounded-xl flex items-center justify-center text-4xl h-24 mb-3 bg-blue-50">📦</div>
+                <p class="text-xs text-slate-500">原箱未拆 · 日版</p>
+                <h4 class="font-bold text-sm text-ink mt-1 line-clamp-2">151 收藏增强盒</h4>
+                <p class="text-[#3B4CCA] font-bold mt-2">¥2,680</p>
+            </a>
+            <a href="market/product.html?id=p009" class="brand-card p-4 hover:game-glow transition block">
+                <div class="rounded-xl flex items-center justify-center text-4xl h-24 mb-3 bg-green-50">👻</div>
+                <p class="text-xs text-slate-500">Pokemon Center 正版</p>
+                <h4 class="font-bold text-sm text-ink mt-1 line-clamp-2">耿鬼 plush · 30cm 限定</h4>
+                <p class="text-[#3B4CCA] font-bold mt-2">¥399</p>
+            </a>
+        </div>
+        <p class="text-center mt-6">
+            <a href="market/browse.html?game=pokemon" class="text-secondary hover:underline font-medium">查看全部宝可梦商品 →</a>
+        </p>
+    </div>
+</section>
+
+<!-- 游戏资产类型 -->
+<section id="game-assets" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-3 border-l-4 border-sky pl-3">游戏虚拟资产全景</h2>
+        <p class="text-gray-500 mb-10 max-w-2xl">从成品账号到游戏素材库，建立完整资产档案，支持估值、转卖、继承全生命周期管理</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-lightgray p-6 rounded-xl card-shadow border-t-4 border-accent hover:game-glow transition">
+                <div class="text-3xl text-accent mb-3"><i class="fa fa-user-secret"></i></div>
+                <h3 class="text-lg font-bold text-secondary mb-2">游戏账号</h3>
+                <p class="text-sm text-gray-600 mb-3">成品号、高练度号、绝版限定号。支持使用权继承、合规过户与找回包赔。</p>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">王者荣耀</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">原神</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">和平精英</span>
+                </div>
+            </div>
+            <div class="bg-lightgray p-6 rounded-xl card-shadow border-t-4 border-sunny hover:game-glow transition">
+                <div class="text-3xl text-sunny mb-3"><i class="fa fa-diamond"></i></div>
+                <h3 class="text-lg font-bold text-secondary mb-2">皮肤 / 装备 / 道具</h3>
+                <p class="text-sm text-gray-600 mb-3">限定皮肤、稀有武器、游戏币、材料包。独立估值、分拆交易或随账号打包转卖。</p>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">CS2 饰品</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">DNF 装备</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">Steam 库存</span>
+                </div>
+            </div>
+            <div class="bg-lightgray p-6 rounded-xl card-shadow border-t-4 border-sky hover:game-glow transition">
+                <div class="text-3xl text-sky mb-3"><i class="fa fa-picture-o"></i></div>
+                <h3 class="text-lg font-bold text-secondary mb-2">游戏素材 / MOD / 资源包</h3>
+                <p class="text-sm text-gray-600 mb-3">2D/3D 模型、UI 素材、音效、地图 MOD、Unity/Unreal 资源。版权关联与授权链存证。</p>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">Unity Asset</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">itch.io</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">Craftpix</span>
+                </div>
+            </div>
+            <div class="bg-lightgray p-6 rounded-xl card-shadow border-t-4 border-secondary hover:game-glow transition">
+                <div class="text-3xl text-secondary mb-3"><i class="fa fa-video-camera"></i></div>
+                <h3 class="text-lg font-bold text-secondary mb-2">直播 / 内容账号</h3>
+                <p class="text-sm text-gray-600 mb-3">游戏主播号、短视频账号、粉丝资产。纪念账号申请、内容留存与收益提取。</p>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">抖音</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">B站</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">斗鱼</span>
+                </div>
+            </div>
+            <div class="bg-lightgray p-6 rounded-xl card-shadow border-t-4 border-accent hover:game-glow transition">
+                <div class="text-3xl text-accent mb-3"><i class="fa fa-bitcoin"></i></div>
+                <h3 class="text-lg font-bold text-secondary mb-2">链游 / 数字藏品</h3>
+                <p class="text-sm text-gray-600 mb-3">NFT 装备、链游代币、数字藏品。密钥安全托管，未来需要时可按安心计划交接。</p>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">GameFi</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">NFT</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">元宇宙</span>
+                </div>
+            </div>
+            <div class="bg-lightgray p-6 rounded-xl card-shadow border-t-4 border-sunny hover:game-glow transition">
+                <div class="text-3xl text-sunny mb-3"><i class="fa fa-code"></i></div>
+                <h3 class="text-lg font-bold text-secondary mb-2">开发者资产</h3>
+                <p class="text-sm text-gray-600 mb-3">游戏源码、插件脚本、SDK 授权、测试账号。知识产权关联与转让合规指导。</p>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">源码</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">插件</span>
+                    <span class="text-xs bg-white px-2 py-0.5 rounded text-gray-500">SDK</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 转卖服务 -->
+<section id="resell" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-3 border-l-4 border-coral pl-3">轻松转卖 · 像挂闲鱼一样简单</h2>
+        <p class="text-slate-500 mb-10 max-w-2xl">验号、估价、托管、放款，平台帮你搞定，不用焦虑</p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="brand-card p-6">
+                <div class="text-secondary text-2xl mb-3"><i class="fa fa-search"></i></div>
+                <h4 class="font-bold mb-2 text-ink">智能估价</h4>
+                <p class="text-sm text-slate-500">AI + 人工估号，告诉你大概卖多少合适</p>
+            </div>
+            <div class="brand-card p-6">
+                <div class="text-sky text-2xl mb-3"><i class="fa fa-camera"></i></div>
+                <h4 class="font-bold mb-2 text-ink">官方验号</h4>
+                <p class="text-sm text-slate-500">录屏验号，买家看得明白，卖得更快</p>
+            </div>
+            <div class="brand-card p-6">
+                <div class="text-secondary text-2xl mb-3"><i class="fa fa-lock"></i></div>
+                <h4 class="font-bold mb-2 text-ink">资金托管</h4>
+                <p class="text-sm text-slate-500">钱在平台，货到手再放款，双方都安心</p>
+            </div>
+            <div class="brand-card p-6">
+                <div class="text-sunny text-2xl mb-3"><i class="fa fa-umbrella"></i></div>
+                <h4 class="font-bold mb-2 text-ink">找回包赔</h4>
+                <p class="text-sm text-slate-500">可选 110% 包赔，像给账号买了份保险</p>
+            </div>
+        </div>
+        <div class="mt-10 grid md:grid-cols-3 gap-4 text-center">
+            <div class="rounded-2xl bg-[#FFFBEB] border-2 border-[#FFCB05] p-4">
+                <div class="text-2xl font-bold text-secondary">极速回收</div>
+                <p class="text-xs text-slate-500 mt-1">&lt;30 分钟 · 急售首选</p>
+            </div>
+            <div class="rounded-2xl bg-blue-50 border-2 border-blue-200 p-4">
+                <div class="text-2xl font-bold text-secondary">委托代售</div>
+                <p class="text-xs text-slate-500 mt-1">1 对 1 顾问帮你上架</p>
+            </div>
+            <div class="rounded-2xl bg-red-50 border-2 border-red-200 p-4">
+                <div class="text-2xl font-bold text-coral">高值卡牌</div>
+                <p class="text-xs text-slate-500 mt-1">PSA / BGS 专人对接</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 素材关联 -->
+<section id="materials" class="py-16 bg-lightgray">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-3 border-l-4 border-accent pl-3">游戏素材关联与版权管理</h2>
+        <p class="text-gray-500 mb-6 max-w-2xl">将游戏素材库、MOD 资源、开发资产与账号资产统一关联，形成可追溯的数字资产图谱</p>
+
+        <!-- 平台交易依据 · 安心计划 -->
+        <div class="mb-10 brand-insurance-banner p-6 md:p-8">
+            <h3 class="text-lg font-bold text-secondary mb-3 flex items-center gap-2">
+                <i class="fa fa-list-alt text-sky"></i> 平台有记录 · 未来交接更省心
+            </h3>
+            <p class="text-sm md:text-base text-slate-600 leading-relaxed mb-4">
+                如果客户开通了<strong>数字资产安心计划</strong>（面向未来的保障，等同给游戏和线上资产买保险），其中包含的游戏账号、皮肤、道具、素材等，家人以后需要时，可以在平台查看<strong>完整交易依据</strong>——在本平台的登记、验号、买卖、托管记录都会永久保存，清清楚楚，不用猜、不用慌。
+            </p>
+            <ul class="grid sm:grid-cols-2 gap-3 text-sm text-gray-600 mb-4">
+                <li class="flex items-start gap-2"><i class="fa fa-check-circle text-sky mt-0.5"></i><span>交易时间、金额、买卖双方与订单编号</span></li>
+                <li class="flex items-start gap-2"><i class="fa fa-check-circle text-sky mt-0.5"></i><span>官方验号报告与装备/库存清单快照</span></li>
+                <li class="flex items-start gap-2"><i class="fa fa-check-circle text-sky mt-0.5"></i><span>Escrow 托管与放款节点记录</span></li>
+                <li class="flex items-start gap-2"><i class="fa fa-check-circle text-sky mt-0.5"></i><span>区块链存证哈希 · 可对接公证文书</span></li>
+            </ul>
+            <p class="text-xs text-gray-500 border-t border-gray-200 pt-4">
+                <i class="fa fa-info-circle text-accent mr-1"></i>
+                <strong>一切在平台上，都有交易记录。</strong>这些依据可用于遗产估值、继承权证明与纠纷处理；未在本平台流转的资产，建议尽早登记入库，纳入统一图谱。
+                <a href="market/browse.html" class="text-secondary hover:underline ml-1">浏览道具/账号市场 →</a>
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8 items-start">
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-xl card-shadow flex gap-4">
+                    <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center shrink-0">
+                        <i class="fa fa-sitemap text-accent text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-secondary mb-1">素材-账号关联图谱</h4>
+                        <p class="text-sm text-gray-600">同一开发者/玩家的账号、素材包、MOD、源码自动关联，一键查看完整资产清单</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl card-shadow flex gap-4">
+                    <div class="w-12 h-12 bg-sky/10 rounded-lg flex items-center justify-center shrink-0">
+                        <i class="fa fa-copyright text-sky text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-secondary mb-1">版权授权链存证</h4>
+                        <p class="text-sm text-gray-600">记录素材来源（Unity Store / itch.io / 自制），授权范围上链，转卖时自动校验合规性</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl card-shadow flex gap-4">
+                    <div class="w-12 h-12 bg-sunny/10 rounded-lg flex items-center justify-center shrink-0">
+                        <i class="fa fa-folder-open text-sunny text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-secondary mb-1">素材库云端归档</h4>
+                        <p class="text-sm text-gray-600">2D/3D 模型、贴图、音效、UI  kit 统一压缩存储，支持版本管理与同名覆盖更新</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl card-shadow flex gap-4">
+                    <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center shrink-0">
+                        <i class="fa fa-exchange text-secondary text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-secondary mb-1">素材打包转卖</h4>
+                        <p class="text-sm text-gray-600">支持素材包独立挂牌；开通安心计划后，未来可按意愿分配</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl card-shadow p-6 border border-gray-100">
+                <h4 class="font-bold text-secondary mb-4 flex items-center gap-2">
+                    <i class="fa fa-database text-accent"></i> 素材关联示例
+                </h4>
+                <div class="space-y-3 text-sm">
+                    <div class="flex items-center gap-3 p-3 bg-lightgray rounded-lg">
+                        <span class="w-8 h-8 bg-accent text-white rounded flex items-center justify-center text-xs font-bold">账号</span>
+                        <div class="flex-1">
+                            <div class="font-medium">Steam · CS2 库存账号</div>
+                            <div class="text-xs text-gray-500">关联 47 件饰品 · 估值 ¥12,800</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center"><i class="fa fa-link text-gray-300"></i></div>
+                    <div class="flex items-center gap-3 p-3 bg-lightgray rounded-lg">
+                        <span class="w-8 h-8 bg-sky text-primary rounded flex items-center justify-center text-xs font-bold">素材</span>
+                        <div class="flex-1">
+                            <div class="font-medium">自制 HUD 皮肤包 v2.3</div>
+                            <div class="text-xs text-gray-500">12 张 UI 贴图 · Unity UGUI · 版权自有</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center"><i class="fa fa-link text-gray-300"></i></div>
+                    <div class="flex items-center gap-3 p-3 bg-lightgray rounded-lg">
+                        <span class="w-8 h-8 bg-sunny text-primary rounded flex items-center justify-center text-xs font-bold">MOD</span>
+                        <div class="flex-1">
+                            <div class="font-medium">Minecraft 建筑模组包</div>
+                            <div class="text-xs text-gray-500">38 个 schematic · CurseForge 发布</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center"><i class="fa fa-link text-gray-300"></i></div>
+                    <div class="flex items-center gap-3 p-3 bg-lightgray rounded-lg">
+                        <span class="w-8 h-8 bg-secondary text-white rounded flex items-center justify-center text-xs font-bold">源码</span>
+                        <div class="flex-1">
+                            <div class="font-medium">独立游戏 Demo 项目</div>
+                            <div class="text-xs text-gray-500">Unreal 5.3 · 完整工程 · Git 仓库托管</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-4 text-center">所有关联关系区块链存证 · 转卖/继承时自动同步</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 市场实力 -->
+<section id="market" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-10 border-l-4 border-sunny pl-3 text-center">游戏资产市场覆盖</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+            <div class="p-6 bg-lightgray rounded-xl">
+                <i class="fa fa-gamepad text-4xl text-sky mb-3"></i>
+                <div class="text-2xl font-bold text-secondary">6000+</div>
+                <p class="text-sm text-gray-600 mt-1">支持交易游戏品类</p>
+            </div>
+            <div class="p-6 bg-lightgray rounded-xl">
+                <i class="fa fa-shopping-cart text-4xl text-sunny mb-3"></i>
+                <div class="text-2xl font-bold text-secondary">100万+</div>
+                <p class="text-sm text-gray-600 mt-1">在架游戏资产商品</p>
+            </div>
+            <div class="p-6 bg-lightgray rounded-xl">
+                <i class="fa fa-users text-4xl text-accent mb-3"></i>
+                <div class="text-2xl font-bold text-secondary">7000万+</div>
+                <p class="text-sm text-gray-600 mt-1">累计服务玩家用户</p>
+            </div>
+            <div class="p-6 bg-lightgray rounded-xl">
+                <i class="fa fa-clock-o text-4xl text-secondary mb-3"></i>
+                <div class="text-2xl font-bold text-secondary">20分钟</div>
+                <p class="text-sm text-gray-600 mt-1">热门账号最快成交</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 公司历程（保留，微调文案） -->
+<section id="about" class="py-16 bg-lightgray">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-8 border-l-4 border-sunny pl-3">发展历程 · 从 AI 到卡牌收藏</h2>
+        <div class="space-y-6">
+            <div class="flex gap-4 items-start">
+                <div class="w-16 md:w-20 font-bold text-sunny shrink-0 text-lg">2017</div>
+                <div>
+                    <h3 class="text-lg font-bold text-secondary mb-1">企业创立，深耕 AI 前沿技术</h3>
+                    <p class="text-sm md:text-base text-gray-600">专注前沿科技研发，为企业、个人提供智能化技术解决方案，夯实 AI 算力核心根基。</p>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start">
+                <div class="w-16 md:w-20 font-bold text-sunny shrink-0 text-lg">2020</div>
+                <div>
+                    <h3 class="text-lg font-bold text-secondary mb-1">切入游戏虚拟资产赛道</h3>
+                    <p class="text-sm md:text-base text-gray-600">推出游戏账号登记与虚拟资产转卖，并上线<strong>数字资产安心计划</strong>——像给线上资产买保险，轻松无负担。</p>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start">
+                <div class="w-16 md:w-20 font-bold text-sunny shrink-0 text-lg">2024</div>
+                <div>
+                    <h3 class="text-lg font-bold text-secondary mb-1">游戏素材关联系统上线</h3>
+                    <p class="text-sm md:text-base text-gray-600">建立素材-账号-版权关联图谱，支持 MOD、开发资源、链游资产的统一托管与合规转卖。</p>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start">
+                <div class="w-16 md:w-20 font-bold text-sunny shrink-0 text-lg">2026</div>
+                <div>
+                    <h3 class="text-lg font-bold text-secondary mb-1">宝可梦卡牌 & 实体玩具市场上线</h3>
+                    <p class="text-sm md:text-base text-gray-600">接入 PSA/BGS 验卡、正版玩具溯源，高罕卡牌与收藏盒交易专区开放，搭配安心计划与香港保险加保。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 安全保障 -->
+<section id="security" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-3 border-l-4 border-sunny pl-3">安心保障 · 像买保险一样简单</h2>
+        <p class="text-slate-500 mb-8 max-w-3xl">交易有托管、记录可追溯；未来保障可搭配香港保险机构专项投保——轻松、不制造焦虑</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-5 border border-gray-200 rounded-xl card-shadow">
+                <div class="text-[32px] text-sunny mb-3"><i class="fa fa-file-text-o"></i></div>
+                <h4 class="font-bold text-lg mb-2">公证处文书保管</h4>
+                <p class="text-sm">100+ 公证处合作，交易合同与委托文件公证存档，具备司法效力</p>
+            </div>
+            <div class="p-5 border border-gray-200 rounded-xl card-shadow">
+                <div class="text-[32px] text-sky mb-3"><i class="fa fa-check-square-o"></i></div>
+                <h4 class="font-bold text-lg mb-2">官方验号报告</h4>
+                <p class="text-sm">登录验号录屏 + 装备截图，报告与游戏数据一一对应，杜绝虚假信息</p>
+            </div>
+            <div class="p-5 border border-gray-200 rounded-xl card-shadow">
+                <div class="text-[32px] text-accent mb-3"><i class="fa fa-shield"></i></div>
+                <h4 class="font-bold text-lg mb-2">找回包赔机制</h4>
+                <p class="text-sm">账号被找回按售价 110% 赔付，VIP 含终身包赔，买号零损失</p>
+            </div>
+            <div class="p-5 border border-gray-200 rounded-xl card-shadow">
+                <div class="text-[32px] text-sunny mb-3"><i class="fa fa-link"></i></div>
+                <h4 class="font-bold text-lg mb-2">区块链全程存证</h4>
+                <p class="text-sm">交易记录、素材版权、委托意愿上链，不可篡改、全程可追溯</p>
+            </div>
+        </div>
+
+        <!-- 未来保障：平台记录 + 香港保险 -->
+        <div id="legacy-guarantee" class="mt-10 grid lg:grid-cols-2 gap-6">
+            <div class="brand-insurance-banner p-6 md:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-sky/20 flex items-center justify-center">
+                        <i class="fa fa-history text-sky text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-secondary">数字资产安心计划 · 交易有据</h3>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                    计划里若包含<strong>游戏账号、道具、素材</strong>等线上资产，家人未来需要了解或交接时，可在永恒守护科技查看<strong>平台交易依据</strong>——从登记、验号到买卖成交，<strong>一切在平台上都有记录</strong>，就像保单的凭证一样清晰。
+                </p>
+                <ul class="text-sm text-slate-600 space-y-2">
+                    <li>• 订单流水与托管节点</li>
+                    <li>• 验号报告与资产快照</li>
+                    <li>• 素材-账号关联图谱</li>
+                    <li>• 可选区块链存证</li>
+                </ul>
+            </div>
+            <div class="rounded-2xl border-2 border-sunny/50 bg-gradient-to-br from-amber-50 to-orange-50 p-6 md:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-sunny/30 flex items-center justify-center">
+                        <i class="fa fa-institution text-amber-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-secondary">香港保险 · 自愿加保更踏实</h3>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                    可以把<strong>数字资产安心计划</strong>搭配<strong>香港大型保险机构</strong>的专项方案——就像给游戏装备和线上资产<strong>多买一份保险</strong>，按资产规模自愿投保，托管、交易、未来交接都有金融级兜底，心里更踏实。
+                </p>
+                <ul class="text-sm text-slate-600 space-y-2 mb-4">
+                    <li>• 托管与执行责任类保障</li>
+                    <li>• 高价值资产可定制保额</li>
+                    <li>• 投保凭证与计划一并归档</li>
+                </ul>
+                <p class="text-xs text-slate-500">
+                    <i class="fa fa-phone text-sunny mr-1"></i> 投保咨询：<a href="tel:13910988750" class="text-primary hover:underline">139 1098 8750</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 交易流程 -->
+<section id="process" class="py-16 bg-lightgray">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-10 border-l-4 border-sky pl-3">游戏资产交易四步流程</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-6 rounded-xl card-shadow text-center">
+                <div class="w-10 h-10 mx-auto rounded-full bg-accent text-white flex items-center justify-center font-bold mb-4">1</div>
+                <h4 class="font-bold mb-2">资产登记 & 估价</h4>
+                <p class="text-sm text-gray-600">录入账号/素材信息，AI + 人工双重估价，生成资产档案与关联图谱</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl card-shadow text-center">
+                <div class="w-10 h-10 mx-auto rounded-full bg-accent text-white flex items-center justify-center font-bold mb-4">2</div>
+                <h4 class="font-bold mb-2">验号 & 上架</h4>
+                <p class="text-sm text-gray-600">官方验号录屏，素材版权校验，挂牌展示或委托代售</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl card-shadow text-center">
+                <div class="w-10 h-10 mx-auto rounded-full bg-accent text-white flex items-center justify-center font-bold mb-4">3</div>
+                <h4 class="font-bold mb-2">托管交易</h4>
+                <p class="text-sm text-gray-600">资金平台托管，确认过户后放款，全程系统监控 + 区块链存证</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl card-shadow text-center">
+                <div class="w-10 h-10 mx-auto rounded-full bg-accent text-white flex items-center justify-center font-bold mb-4">4</div>
+                <h4 class="font-bold mb-2">交付 / 安心交接</h4>
+                <p class="text-sm text-gray-600">过户完成；若开通了安心计划，未来需要时可按意愿一键交接</p>
+            </div>
+        </div>
+        <p class="text-center mt-6 text-secondary font-semibold">验卡验真 · 资金托管 · 找回包赔 · 轻松转卖 · 未来有保障</p>
+    </div>
+</section>
+
+<!-- 套餐报价 -->
+<section id="price" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-3 border-l-4 border-sunny pl-3">安心套餐 · 按需选就好</h2>
+        <p class="text-slate-500 mb-10">从单张卡牌到完整账号库，像选游戏月卡一样简单</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-lightgray rounded-xl card-shadow overflow-hidden">
+                <div class="bg-secondary text-white p-4 text-center">
+                    <h3 class="font-bold">玩家入门版</h3>
+                    <div class="text-[28px] font-bold mt-2">¥365/首年</div>
+                </div>
+                <div class="p-5 text-sm space-y-2">
+                    <p>✅ 1 个游戏账号建档</p>
+                    <p>✅ 基础验号报告</p>
+                    <p>✅ 平台挂牌转卖</p>
+                    <p class="text-red-500">❌ 不含包赔与素材关联</p>
+                    <p class="mt-3 text-gray-500">适合单账号、资产 ¥1 万以内</p>
+                </div>
+            </div>
+            <div class="bg-lightgray rounded-xl card-shadow overflow-hidden">
+                <div class="bg-secondary text-white p-4 text-center">
+                    <h3 class="font-bold">游戏达人版</h3>
+                    <div class="text-[28px] font-bold mt-2">¥998/首年</div>
+                </div>
+                <div class="p-5 text-sm space-y-2">
+                    <p>✅ 5 个账号 + 素材包关联</p>
+                    <p>✅ 官方验号 + 智能估价</p>
+                    <p>✅ 30% 免费包赔</p>
+                    <p>✅ 委托代售服务</p>
+                    <p class="mt-3 text-gray-500">适合多游戏、资产 ¥10 万以内</p>
+                </div>
+            </div>
+            <div class="bg-lightgray rounded-xl card-shadow overflow-hidden border-2 border-sunny">
+                <div class="bg-[#FFCB05] text-ink p-4 text-center">
+                    <h3 class="font-bold">硬核玩家版（推荐）</h3>
+                    <div class="text-[28px] font-bold mt-2">¥1888/首年</div>
+                </div>
+                <div class="p-5 text-sm space-y-2">
+                    <p>✅ 无限账号 + 卡牌 + 素材库</p>
+                    <p>✅ 110% 找回全额包赔</p>
+                    <p>✅ 1 对 1 顾问 + 极速回收</p>
+                    <p>✅ 可选数字资产安心计划</p>
+                    <p class="mt-3 text-gray-500">适合高价值库存、卡牌 / Steam 玩家</p>
+                </div>
+            </div>
+            <div class="bg-lightgray rounded-xl card-shadow overflow-hidden border-2 border-[#3B4CCA]">
+                <div class="bg-secondary text-white p-4 text-center">
+                    <h3 class="font-bold">收藏家版</h3>
+                    <div class="text-[28px] font-bold mt-2">¥2888/首年</div>
+                </div>
+                <div class="p-5 text-sm space-y-2">
+                    <p>✅ PSA / BGS 卡牌建档</p>
+                    <p>✅ 高罕卡验卡 + 保险级包装</p>
+                    <p>✅ 实体玩具溯源登记</p>
+                    <p>✅ 香港保险加保对接</p>
+                    <p class="mt-3 text-gray-500">适合宝可梦 TCG、高值收藏</p>
+                </div>
+            </div>
+        </div>
+        <p class="mt-6 text-gray-500 text-sm">游戏资产处置服务费 2%~5%（按成交金额阶梯）；第三方公证、平台手续费实报实销</p>
+    </div>
+</section>
+
+<!-- 其他收费 -->
+<section id="extra-fee" class="py-16 bg-lightgray">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold text-secondary mb-8 border-l-4 border-sunny pl-3">其他收费说明</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-xl card-shadow">
+                <h4 class="font-bold text-secondary text-lg mb-3">01 年度续费</h4>
+                <p class="text-sm">续费标准 ￥180–￥1880 元；续费后托管与素材关联权益延续 12 个月</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl card-shadow">
+                <h4 class="font-bold text-secondary text-lg mb-3">02 验号 / 估价服务</h4>
+                <p class="text-sm">单次官方验号 ¥29 起；AI 智能估价免费，人工深度估价 ¥99 起</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl card-shadow">
+                <h4 class="font-bold text-secondary text-lg mb-3">03 资产处置 2%~5%</h4>
+                <p class="text-sm">游戏账号、饰品、素材包变现协助，按最终成交金额阶梯收取，无隐形消费</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 联系我们 -->
+<section id="contact" class="py-16 bg-gradient-to-br from-[#FFFBEB] via-[#EFF6FF] to-[#FEF9C3]">
+    <div class="container mx-auto px-4">
+        <h2 class="text-[24px] md:text-[32px] font-bold mb-8 border-l-4 border-[#FFCB05] pl-3 text-ink">联系我们</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4 text-slate-600">
+                <p>玩家、开发者、工作室都欢迎来聊——转卖、保障、投保，随便问 😊</p>
+                <p><i class="fa fa-phone mr-2 text-primary"></i>咨询热线：<a href="tel:13910988750" class="hover:text-primary transition font-medium">139 1098 8750</a></p>
+                <div class="flex flex-wrap items-center gap-3">
+                    <p><i class="fa fa-wechat mr-2 text-secondary"></i>企业微信客服：</p>
+                    <img src="static/img/qywx.png" alt="企业微信二维码" class="w-32 h-32 rounded-xl bg-white p-1 shadow-md">
+                </div>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="text-2xl font-bold text-secondary mb-3">你的游戏人生，永不落幕</p>
+                <p class="text-lg text-slate-500">永恒守护科技 · Aeterna Save</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-white border-t border-slate-100 py-6 text-center text-sm text-slate-500">
+    <div class="container mx-auto px-4">
+        © 2026 永恒守护科技 · Aeterna Save 版权所有
+    </div>
+</footer>
+
+<script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+</script>
+</body>
+</html>

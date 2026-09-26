@@ -1,0 +1,10 @@
+{
+  "name": "yunban-h5",
+  "version": "1.0.0",
+  "private": true,
+  "description": "云伴数维 - 数字资产与电子遗产善后委托平台 H5 官网",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "start": "python3 -m http.server 3000"
+  }
+}
