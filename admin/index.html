@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 · Aeterna Save</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/brand.css">
+  <style>
+    body { font-family: "Noto Sans SC", system-ui, sans-serif; background: #FFFBEB; }
+    .panel { background: #fff; border: 1px solid #FDE68A; border-radius: 16px; }
+    .btn-main { background: #1E58E0; color: #fff; }
+    .btn-main:hover { background: #1648b8; }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800">
+  <div id="loginView" class="min-h-screen flex items-center justify-center p-6">
+    <div class="panel w-full max-w-md p-8 shadow-sm">
+      <div class="flex items-center gap-3 mb-6">
+        <img src="/static/img/logo-mark.png" alt="" class="h-10 bg-white">
+        <div>
+          <div class="font-bold text-[#1E58E0]">Aeterna Save</div>
+          <div class="text-xs text-slate-400">官网管理后台</div>
+        </div>
+      </div>
+      <label class="block text-sm mb-1">登录密码</label>
+      <input id="password" type="password" class="w-full border rounded-lg px-3 py-2 mb-4" placeholder="请输入后台密码">
+      <p id="loginError" class="hidden text-sm text-red-500 mb-3"></p>
+      <button id="loginBtn" class="btn-main w-full py-2.5 rounded-lg font-medium">进入后台</button>
+      <p class="text-xs text-slate-400 mt-4">请在本机运行 <code>python3 admin/server.py</code> 后打开本页。默认密码在 <code>admin/password.txt</code>。</p>
+    </div>
+  </div>
+
+  <div id="appView" class="hidden">
+    <header class="bg-white border-b border-amber-200 sticky top-0 z-20">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="font-bold text-[#1E58E0]">永恒守护 · 管理后台</div>
+        <div class="flex items-center gap-3 text-sm">
+          <a href="/" target="_blank" class="text-slate-500 hover:text-[#1E58E0]">查看官网</a>
+          <button id="logoutBtn" class="text-slate-500 hover:text-red-500">退出</button>
+        </div>
+      </div>
+    </header>
+    <main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="panel p-4"><div class="text-xs text-slate-400">上架商品</div><div id="statProducts" class="text-2xl font-bold text-[#1E58E0]">0</div></div>
+        <div class="panel p-4"><div class="text-xs text-slate-400">游戏分类</div><div id="statGames" class="text-2xl font-bold text-[#1E58E0]">0</div></div>
+        <div class="panel p-4"><div class="text-xs text-slate-400">已隐藏</div><div id="statHidden" class="text-2xl font-bold text-slate-500">0</div></div>
+      </div>
+
+      <section class="panel p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-bold">商品</h2>
+          <button id="addProductBtn" class="btn-main text-sm px-4 py-2 rounded-lg">新增商品</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="text-left text-slate-400 border-b">
+              <tr><th class="py-2">标题</th><th>分类</th><th>价格</th><th>状态</th><th></th></tr>
+            </thead>
+            <tbody id="productTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel p-5">
+        <h2 class="font-bold mb-4">游戏分类</h2>
+        <div id="gameList" class="grid sm:grid-cols-2 gap-3 mb-4"></div>
+        <button id="addGameBtn" class="text-sm text-[#1E58E0]">+ 添加分类</button>
+      </section>
+
+      <section class="panel p-5">
+        <h2 class="font-bold mb-4">市场数字（首页展示）</h2>
+        <div class="grid sm:grid-cols-3 gap-3">
+          <div><label class="text-xs text-slate-400">本月卡牌成交</label><input id="statMonthly" class="w-full border rounded-lg px-3 py-2"></div>
+          <div><label class="text-xs text-slate-400">验卡通过率</label><input id="statRate" class="w-full border rounded-lg px-3 py-2"></div>
+          <div><label class="text-xs text-slate-400">交易额</label><input id="statGmv" class="w-full border rounded-lg px-3 py-2"></div>
+        </div>
+        <button id="saveSiteBtn" class="mt-4 btn-main text-sm px-4 py-2 rounded-lg">保存数字</button>
+        <p id="siteMsg" class="text-xs text-green-600 mt-2 hidden">已保存。若官网在 GitHub Pages，请把改动提交上传后才会在公网生效。</p>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="hidden fixed inset-0 bg-black/40 z-30 flex items-start justify-center overflow-y-auto p-4">
+    <div class="panel w-full max-w-2xl my-8 p-6">
+      <div class="flex justify-between mb-4">
+        <h3 class="font-bold" id="modalTitle">编辑商品</h3>
+        <button id="closeModal" class="text-slate-400">✕</button>
+      </div>
+      <form id="productForm" class="grid sm:grid-cols-2 gap-3 text-sm">
+        <input type="hidden" name="id">
+        <label class="sm:col-span-2">标题<input name="title" required class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>价格（元）<input name="price" type="number" required class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>展示图（emoji 或文字）<input name="image" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>游戏
+          <select name="game" class="w-full border rounded-lg px-3 py-2 mt-1"></select>
+        </label>
+        <label>类型
+          <select name="type" class="w-full border rounded-lg px-3 py-2 mt-1">
+            <option value="cards">卡牌</option>
+            <option value="toys">玩具</option>
+            <option value="account">账号</option>
+            <option value="items">道具/素材</option>
+          </select>
+        </label>
+        <label>类型名称<input name="typeLabel" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>区服 / 系列<input name="server" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>等级 / 品相<input name="level" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>卖家<input name="seller" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>评分<input name="sellerRating" type="number" step="0.1" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>成交笔数<input name="sellerOrders" type="number" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>交付时间<input name="delivery" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label>评级（如 PSA 10）<input name="cardGrade" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label class="sm:col-span-2">标签（逗号分隔）<input name="tags" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label class="sm:col-span-2">包含内容（一行一项）<textarea name="items" rows="3" class="w-full border rounded-lg px-3 py-2 mt-1"></textarea></label>
+        <label class="sm:col-span-2">验真说明<input name="verifyNote" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="published" checked> 前台上架</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="verified"> 已验真</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="escrow"> 资金托管</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="compensation"> 110%包赔</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="legacy"> 安心计划</label>
+        <label>安心计划档位<input name="legacyPlan" class="w-full border rounded-lg px-3 py-2 mt-1"></label>
+        <div class="sm:col-span-2 flex justify-end gap-2 mt-2">
+          <button type="button" id="cancelModal" class="px-4 py-2 rounded-lg border">取消</button>
+          <button type="submit" class="btn-main px-4 py-2 rounded-lg">保存商品</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/admin/app.js"></script>
+</body>
+</html>

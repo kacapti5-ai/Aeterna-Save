@@ -1,3 +1,7 @@
 .DS_Store
 *.svg.png
 .python-version
+admin/password.txt
+admin/.signing_key
+.env
+data/*.tmp

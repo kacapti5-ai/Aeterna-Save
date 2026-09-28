@@ -163,6 +163,7 @@
 <script src="js/data.js"></script>
 <script src="js/market.js"></script>
 <script>
+marketReady.then(() => {
   document.getElementById('header').innerHTML = renderMarketHeader('sell');
   initMobileMenu();
 
@@ -242,6 +243,7 @@
   });
 
   updateStepUI();
+});
 </script>
 </body>
 </html>

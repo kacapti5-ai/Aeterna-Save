@@ -110,6 +110,7 @@
 <script src="js/data.js"></script>
 <script src="js/market.js"></script>
 <script>
+marketReady.then(() => {
   document.getElementById('header').innerHTML = renderMarketHeader('browse');
   initMobileMenu();
 
@@ -159,14 +160,15 @@
     document.getElementById('pItems').innerHTML = p.items.map(i => `<li class="flex items-start gap-2"><i class="fa fa-check text-green-500 mt-1"></i><span>${i}</span></li>`).join('');
 
     const legacyBlock = document.getElementById('pLegacyBlock');
-    if (p.legacy || p.linkedAssets.length) {
-      document.getElementById('pLinked').innerHTML = p.linkedAssets.map(a => `<li>• ${a}</li>`).join('') ||
+    if (p.legacy || (p.linkedAssets && p.linkedAssets.length)) {
+      document.getElementById('pLinked').innerHTML = (p.linkedAssets || []).map(a => `<li>• ${a}</li>`).join('') ||
         '<li>• 暂无关联素材，可在购买后登记</li>';
     } else {
       legacyBlock.classList.add('opacity-60');
       document.getElementById('pLinked').innerHTML = '<li>• 卖家未登记安心计划；在本平台成交后仍将生成完整交易记录</li>';
     }
   }
+});
 </script>
 </body>
 </html>

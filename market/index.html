@@ -103,6 +103,7 @@
 <script src="js/data.js"></script>
 <script src="js/market.js"></script>
 <script>
+marketReady.then(() => {
   document.getElementById('header').innerHTML = renderMarketHeader('home');
   document.getElementById('trustSection').innerHTML = renderTrustSection();
   document.getElementById('gameScroll').innerHTML = MARKET_GAMES.map(g => `
@@ -118,6 +119,7 @@
   document.getElementById('pokemonGrid').innerHTML = pokemonCards.slice(0, 4).map(renderProductCard).join('');
   document.getElementById('trendingGrid').innerHTML = MARKET_PRODUCTS.filter(p => p.game !== 'pokemon').slice(0, 6).map(renderProductCard).join('');
   initMobileMenu();
+});
 </script>
 </body>
 </html>

@@ -116,6 +116,7 @@
 <script src="js/data.js"></script>
 <script src="js/market.js"></script>
 <script>
+marketReady.then(() => {
   document.getElementById('header').innerHTML = renderMarketHeader('browse');
   initMobileMenu();
 
@@ -158,6 +159,7 @@
   document.getElementById('resetFilter').addEventListener('click', () => { form.reset(); renderGrid(); });
   document.getElementById('sortBy').addEventListener('change', renderGrid);
   renderGrid();
+});
 </script>
 </body>
 </html>

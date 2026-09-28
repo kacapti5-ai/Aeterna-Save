@@ -112,15 +112,15 @@ function renderTrustSection() {
       </div>
       <div class="mt-8 grid grid-cols-3 gap-4 text-center text-sm">
         <div class="market-card p-4">
-          <div class="text-2xl font-bold text-[#3B4CCA]">1,240+</div>
+          <div class="text-2xl font-bold text-[#3B4CCA]">${(SITE_SETTINGS.stats && SITE_SETTINGS.stats.monthlyCards) || "1,240+"}</div>
           <div class="text-slate-500 mt-1">本月卡牌成交</div>
         </div>
         <div class="market-card p-4">
-          <div class="text-2xl font-bold text-[#FFCB05]">99.6%</div>
+          <div class="text-2xl font-bold text-[#FFCB05]">${(SITE_SETTINGS.stats && SITE_SETTINGS.stats.verifyRate) || "99.6%"}</div>
           <div class="text-slate-500 mt-1">验卡通过率</div>
         </div>
         <div class="market-card p-4">
-          <div class="text-2xl font-bold text-[#E3350D]">¥2.8亿+</div>
+          <div class="text-2xl font-bold text-[#E3350D]">${(SITE_SETTINGS.stats && SITE_SETTINGS.stats.gmv) || "¥2.8亿+"}</div>
           <div class="text-slate-500 mt-1">平台卡牌交易额</div>
         </div>
       </div>
