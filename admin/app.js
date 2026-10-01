@@ -131,9 +131,22 @@ document.getElementById("addGameBtn").addEventListener("click", async () => {
   await saveMarket();
 });
 
+function showPublish(res) {
+  const el = document.getElementById("siteMsg");
+  el.classList.remove("hidden", "text-green-600", "text-red-500");
+  if (res && res.published) {
+    el.classList.add("text-green-600");
+    el.textContent = "已保存，并正在同步到官网 aeternasave.com（大约 1 分钟后刷新可见）。";
+  } else {
+    el.classList.add("text-red-500");
+    el.textContent = "已保存在服务器，但同步官网失败：" + ((res && res.error) || "未知错误");
+  }
+}
+
 async function saveMarket() {
-  await api("/api/market", { method: "PUT", body: JSON.stringify(market) });
+  const res = await api("/api/market", { method: "PUT", body: JSON.stringify(market) });
   await loadAll();
+  showPublish(res);
 }
 
 document.getElementById("saveSiteBtn").addEventListener("click", async () => {
@@ -141,8 +154,8 @@ document.getElementById("saveSiteBtn").addEventListener("click", async () => {
   site.stats.monthlyCards = document.getElementById("statMonthly").value;
   site.stats.verifyRate = document.getElementById("statRate").value;
   site.stats.gmv = document.getElementById("statGmv").value;
-  await api("/api/site", { method: "PUT", body: JSON.stringify(site) });
-  document.getElementById("siteMsg").classList.remove("hidden");
+  const res = await api("/api/site", { method: "PUT", body: JSON.stringify(site) });
+  showPublish(res);
 });
 
 function openModal(id) {

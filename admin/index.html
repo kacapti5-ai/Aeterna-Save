@@ -37,7 +37,8 @@
       <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="font-bold text-[#1E58E0]">永恒守护 · 管理后台</div>
         <div class="flex items-center gap-3 text-sm">
-          <a href="/" target="_blank" class="text-slate-500 hover:text-[#1E58E0]">查看官网</a>
+          <span class="hidden sm:inline text-xs text-slate-400">保存后会同步到官网</span>
+          <a href="http://aeternasave.com/market/" target="_blank" class="text-slate-500 hover:text-[#1E58E0]">查看官网</a>
           <button id="logoutBtn" class="text-slate-500 hover:text-red-500">退出</button>
         </div>
       </div>
@@ -78,7 +79,8 @@
           <div><label class="text-xs text-slate-400">交易额</label><input id="statGmv" class="w-full border rounded-lg px-3 py-2"></div>
         </div>
         <button id="saveSiteBtn" class="mt-4 btn-main text-sm px-4 py-2 rounded-lg">保存数字</button>
-        <p id="siteMsg" class="text-xs text-green-600 mt-2 hidden">已保存。若官网在 GitHub Pages，请把改动提交上传后才会在公网生效。</p>
+        <p id="siteMsg" class="text-xs text-green-600 mt-2 hidden"></p>
+        <p class="text-xs text-slate-400 mt-3">在这里新增或编辑商品并保存后，会自动同步到官网 <a class="text-[#1E58E0]" href="https://aeternasave.com/market/" target="_blank">aeternasave.com/market</a>。</p>
       </section>
     </main>
   </div>

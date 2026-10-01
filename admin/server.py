@@ -9,6 +9,7 @@ import hmac
 import json
 import os
 import secrets
+import subprocess
 import time
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -66,6 +67,28 @@ def _write_json(path: Path, data) -> None:
     tmp = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     tmp.replace(path)
+
+
+def _publish_to_github() -> dict:
+    """Push catalog JSON to GitHub so aeternasave.com updates. Failures stay local."""
+    script = ROOT / "scripts" / "publish-data.sh"
+    if not script.is_file():
+        return {"published": False, "error": "缺少 publish-data.sh"}
+    try:
+        proc = subprocess.run(
+            ["bash", str(script)],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+            timeout=60,
+            env={**os.environ},
+        )
+    except subprocess.TimeoutExpired:
+        return {"published": False, "error": "同步官网超时"}
+    out = ((proc.stdout or "") + (proc.stderr or "")).strip()
+    if proc.returncode != 0:
+        return {"published": False, "error": out[-400:] or "git push 失败"}
+    return {"published": True, "detail": out[-200:]}
 
 
 def _hash_pw(password: str) -> str:
@@ -242,14 +265,16 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(400, {"error": "games / products 必须是数组"})
                 return
             _write_json(DATA_PATH, {"games": games, "products": products})
-            self._json(200, {"ok": True})
+            pub = _publish_to_github()
+            self._json(200, {"ok": True, **pub})
             return
         if parsed.path == "/api/site":
             if not isinstance(payload, dict):
                 self._json(400, {"error": "无效数据"})
                 return
             _write_json(SITE_PATH, payload)
-            self._json(200, {"ok": True})
+            pub = _publish_to_github()
+            self._json(200, {"ok": True, **pub})
             return
         self._json(404, {"error": "not found"})
 
