@@ -147,13 +147,28 @@ def send_email(to: str, subject: str, text: str) -> tuple[bool, str]:
         return False, "邮件发送失败：" + str(e)[:120]
 
 
+def _cn_mobile(phone: str) -> tuple[str | None, str | None]:
+    dest = "".join(ch for ch in str(phone) if ch.isdigit())
+    if dest.startswith("86") and len(dest) == 13:
+        return dest[2:], None
+    if len(dest) == 11 and dest.startswith("1"):
+        return dest, None
+    return None, "当前短信通道仅支持中国大陆 +86 手机号。港/澳/日请先用邮箱验证码"
+
+
 def send_sms(phone: str, code: str) -> tuple[bool, str]:
-    dest = phone[1:] if phone.startswith("+") else phone
-    template = os.environ.get("ALIYUN_SMS_TEMPLATE_CODE", "").strip()
+    cn, err = _cn_mobile(phone)
+    if err:
+        return False, err
+    api = os.environ.get("ALIYUN_SMS_API", "dypns").strip() or "dypns"
+    template = os.environ.get("ALIYUN_SMS_TEMPLATE_CODE", "100001").strip()
+    if api == "dypns":
+        params = json.dumps({"code": code, "min": "10"}, ensure_ascii=False)
+        return _dypns_sms(cn, template, params)
     if not template:
         return send_sms_text(phone, f"验证码{code}，10分钟内有效")
     params = json.dumps({"code": code}, ensure_ascii=False)
-    return _aliyun_sms(dest, template, params)
+    return _aliyun_sms(cn, template, params)
 
 
 def send_sms_text(phone: str, text: str) -> tuple[bool, str]:
@@ -165,38 +180,32 @@ def send_sms_text(phone: str, text: str) -> tuple[bool, str]:
     return _aliyun_sms(dest, template, params)
 
 
-def _aliyun_sms(phone: str, template_code: str, template_param: str) -> tuple[bool, str]:
+def _aliyun_rpc(host: str, extra: dict) -> tuple[bool, str]:
     access = os.environ.get("ALIYUN_SMS_ACCESS_KEY_ID", "").strip()
     secret = os.environ.get("ALIYUN_SMS_ACCESS_KEY_SECRET", "").strip()
-    sign = os.environ.get("ALIYUN_SMS_SIGN_NAME", "").strip()
-    if not access or not secret or not sign:
+    if not access or not secret:
         return False, "短信通道未开通（缺少阿里云 AccessKey）"
     from datetime import datetime, timezone
+    import base64
 
     params = {
         "AccessKeyId": access,
-        "Action": "SendSms",
         "Format": "JSON",
-        "PhoneNumbers": phone,
         "RegionId": "cn-hangzhou",
-        "SignName": sign,
         "SignatureMethod": "HMAC-SHA1",
         "SignatureNonce": hashlib.sha1(os.urandom(16)).hexdigest(),
         "SignatureVersion": "1.0",
-        "TemplateCode": template_code,
-        "TemplateParam": template_param,
         "Timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "Version": "2017-05-25",
+        **extra,
     }
     sorted_q = sorted(params.items())
     encoded = urllib.parse.urlencode(sorted_q, quote_via=urllib.parse.quote)
     string_to_sign = "GET&%2F&" + urllib.parse.quote(encoded, safe="")
     key = (secret + "&").encode("utf-8")
     sig = hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha1).digest()
-    import base64
-
     params["Signature"] = base64.b64encode(sig).decode("utf-8")
-    url = "https://dysmsapi.aliyuncs.com/?" + urllib.parse.urlencode(params)
+    url = host + "?" + urllib.parse.urlencode(params)
     try:
         with urllib.request.urlopen(url, timeout=12) as resp:
             body = json.loads(resp.read().decode("utf-8"))
@@ -204,6 +213,42 @@ def _aliyun_sms(phone: str, template_code: str, template_param: str) -> tuple[bo
         return False, "短信接口错误：" + e.read()[:120].decode("utf-8", "ignore")
     except Exception as e:
         return False, "短信发送失败：" + str(e)[:120]
-    if body.get("Code") == "OK":
+    if body.get("Code") in ("OK", "ok") or body.get("Success") is True:
         return True, ""
     return False, "短信发送失败：" + str(body.get("Message") or body.get("Code") or body)
+
+
+def _dypns_sms(phone: str, template_code: str, template_param: str) -> tuple[bool, str]:
+    sign = os.environ.get("ALIYUN_SMS_SIGN_NAME", "恒创联众").strip()
+    if not sign:
+        return False, "短信通道未开通（缺少签名）"
+    return _aliyun_rpc(
+        "https://dypnsapi.aliyuncs.com/",
+        {
+            "Action": "SendSmsVerifyCode",
+            "PhoneNumber": phone,
+            "SignName": sign,
+            "TemplateCode": template_code,
+            "TemplateParam": template_param,
+            "CountryCode": "86",
+            "ValidTime": "600",
+            "Interval": "55",
+            "CodeType": "1",
+        },
+    )
+
+
+def _aliyun_sms(phone: str, template_code: str, template_param: str) -> tuple[bool, str]:
+    sign = os.environ.get("ALIYUN_SMS_SIGN_NAME", "").strip()
+    if not sign:
+        return False, "短信通道未开通（缺少阿里云短信签名/模板）"
+    return _aliyun_rpc(
+        "https://dysmsapi.aliyuncs.com/",
+        {
+            "Action": "SendSms",
+            "PhoneNumbers": phone,
+            "SignName": sign,
+            "TemplateCode": template_code,
+            "TemplateParam": template_param,
+        },
+    )
