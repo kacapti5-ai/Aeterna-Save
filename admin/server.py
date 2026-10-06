@@ -63,6 +63,7 @@ ALLOWED_ORIGINS = {
     "http://localhost:8787",
     "http://localhost:8788",
     "http://121.41.104.180:8788",
+    "http://121.41.104.180",
 }
 
 

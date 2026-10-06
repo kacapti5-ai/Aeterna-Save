@@ -2,7 +2,7 @@ const AETERNA_API = (function () {
   const host = location.hostname;
   const port = location.port;
   if (port === "8787" || port === "8788" || host === "121.41.104.180") return "";
-  return "http://121.41.104.180:8788";
+  return "http://121.41.104.180";
 })();
 
 const SELLER_TOKEN_KEY = "aeterna_seller_token";
