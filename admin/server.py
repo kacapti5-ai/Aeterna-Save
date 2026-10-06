@@ -9,6 +9,7 @@ import hashlib
 import hmac
 import json
 import os
+import re
 import secrets
 import subprocess
 import threading
@@ -484,6 +485,7 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 products.insert(0, product)
                 market["products"] = products
+                _ensure_game(market, {"id": product["game"], "name": product.get("gameName") or product["game"], "icon": "fa-gamepad", "color": "#3B4CCA"})
                 _write_json(DATA_PATH, market)
             pub = _publish_to_github()
             self._json(200, {"ok": True, "product": product, **pub})
@@ -518,6 +520,7 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 products[idx] = product
                 market["products"] = products
+                _ensure_game(market, {"id": product["game"], "name": product.get("gameName") or product["game"], "icon": "fa-gamepad", "color": "#3B4CCA"})
                 _write_json(DATA_PATH, market)
             pub = _publish_to_github()
             self._json(200, {"ok": True, "product": product, **pub})
@@ -576,13 +579,41 @@ class Handler(BaseHTTPRequestHandler):
         self._json(200, {"ok": True, **pub})
 
 
+def _game_slug(name: str) -> str:
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", name).strip("-").lower()
+    if 2 <= len(slug) <= 40:
+        return slug
+    return "g" + hashlib.sha1(name.encode("utf-8")).hexdigest()[:10]
+
+
+def _resolve_game(games: list, payload: dict) -> tuple[dict | None, str | None]:
+    raw = _clip(payload.get("gameName") or payload.get("game"), 40)
+    if len(raw) < 1:
+        return None, "请填写游戏名称"
+    for g in games:
+        if g.get("id") == raw or (g.get("name") or "").strip() == raw:
+            return g, None
+    gid = _game_slug(raw)
+    if any(g.get("id") == gid for g in games):
+        gid = (gid[:28] + secrets.token_hex(3))[:40]
+    return {"id": gid, "name": raw, "icon": "fa-gamepad", "color": "#3B4CCA"}, None
+
+
+def _ensure_game(market: dict, game: dict) -> None:
+    games = market.get("games") or []
+    gid = game.get("id")
+    if not any(g.get("id") == gid for g in games):
+        games.append(game)
+        market["games"] = games
+
+
 def _seller_product(user: dict, payload: dict, existing: dict | None) -> tuple[dict | None, str | None]:
     market = _read_json(DATA_PATH, {"games": [], "products": []})
     games = market.get("games") or []
-    game_id = _clip(payload.get("game"), 40)
-    game = next((g for g in games if g.get("id") == game_id), None)
-    if not game:
-        return None, "请选择游戏"
+    game, gerr = _resolve_game(games, payload)
+    if gerr:
+        return None, gerr
+    game_id = game.get("id")
     title = _clip(payload.get("title"), 80)
     if len(title) < 2:
         return None, "请填写标题"

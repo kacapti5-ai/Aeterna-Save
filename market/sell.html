@@ -23,7 +23,7 @@
     <div class="flex justify-between mb-10 text-xs sm:text-sm" id="stepBar">
       <div class="step-item flex-1 text-center" data-step="1">
         <div class="w-8 h-8 mx-auto rounded-full border-2 border-gray-600 flex items-center justify-center mb-1 step-circle">1</div>
-        <span class="text-gray-500">选游戏</span>
+        <span class="text-gray-500">游戏</span>
       </div>
       <div class="step-item flex-1 text-center" data-step="2">
         <div class="w-8 h-8 mx-auto rounded-full border-2 border-gray-600 flex items-center justify-center mb-1 step-circle">2</div>
@@ -46,9 +46,11 @@
     <div class="market-card p-6 md:p-8">
       <!-- Step 1 -->
       <div class="sell-step" data-step="1">
-        <h2 class="font-bold text-lg mb-4">选择游戏</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="gamePick"></div>
-        <input type="hidden" id="selectedGame" value="">
+        <h2 class="font-bold text-lg mb-4">填写游戏</h2>
+        <p class="text-sm text-slate-500 mb-4">先写下游戏或系列名称，之后商品多了再按名称归类。</p>
+        <label class="block text-gray-400 mb-1 text-sm">游戏名称</label>
+        <input type="text" id="sellGame" list="gameHints" maxlength="40" placeholder="例：宝可梦、王者荣耀、原神…" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-slate-700">
+        <datalist id="gameHints"></datalist>
       </div>
 
       <!-- Step 2 -->
@@ -173,24 +175,14 @@ marketReady.then(async () => {
   if (!requireSeller(me, 'sell.html')) return;
 
   let currentStep = 1;
-  const selectedGameName = {};
 
-  document.getElementById('gamePick').innerHTML = MARKET_GAMES.map(g => `
-    <button type="button" class="game-pick market-card p-4 text-center hover:border-orange-500 transition" data-id="${g.id}">
-      <div class="text-2xl mb-1" style="color:${g.color}"><i class="fa ${g.icon}"></i></div>
-      <div class="text-xs font-medium">${g.name}</div>
-    </button>
-  `).join('');
+  document.getElementById('gameHints').innerHTML = MARKET_GAMES.map(g =>
+    `<option value="${String(g.name || '').replace(/"/g, '&quot;')}"></option>`
+  ).join('');
 
-  document.querySelectorAll('.game-pick').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.game-pick').forEach(b => b.classList.remove('border-orange-500'));
-      btn.classList.add('border-orange-500');
-      document.getElementById('selectedGame').value = btn.dataset.id;
-      selectedGameName.id = btn.dataset.id;
-      selectedGameName.name = btn.querySelector('.font-medium, .text-xs.font-medium')?.textContent || MARKET_GAMES.find(x => x.id === btn.dataset.id)?.name;
-    });
-  });
+  function gameName() {
+    return (document.getElementById('sellGame').value || '').trim();
+  }
 
   function updateStepUI() {
     document.querySelectorAll('.sell-step').forEach(el => {
@@ -216,10 +208,10 @@ marketReady.then(async () => {
   }
 
   function buildSummary() {
-    const game = MARKET_GAMES.find(g => g.id === document.getElementById('selectedGame').value);
+    const game = gameName();
     const legacy = document.getElementById('sellLegacy').checked;
     document.getElementById('sellSummary').innerHTML = `
-      <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">游戏</span><span>${game?.name || '—'}</span></div>
+      <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">游戏</span><span>${game || '—'}</span></div>
       <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">标题</span><span class="text-right max-w-[60%]">${document.getElementById('sellTitle').value || '—'}</span></div>
       <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">区服</span><span>${document.getElementById('sellServer').value || '—'}</span></div>
       <div class="flex justify-between py-2 border-b border-gray-800"><span class="text-gray-500">价格</span><span class="text-orange-400 font-bold">¥${Number(document.getElementById('sellPrice').value || 0).toLocaleString()}</span></div>
@@ -232,8 +224,8 @@ marketReady.then(async () => {
   });
 
   document.getElementById('btnNext').addEventListener('click', () => {
-    if (currentStep === 1 && !document.getElementById('selectedGame').value) {
-      alert('请先选择游戏'); return;
+    if (currentStep === 1 && !gameName()) {
+      alert('请填写游戏名称'); return;
     }
     if (currentStep === 3 && !document.getElementById('agreeVerify').checked) {
       alert('请同意验号协议'); return;
@@ -244,7 +236,8 @@ marketReady.then(async () => {
       sellerApi('/api/seller/products', {
         method: 'POST',
         body: JSON.stringify({
-          game: document.getElementById('selectedGame').value,
+          game: gameName(),
+          gameName: gameName(),
           title: document.getElementById('sellTitle').value,
           server: document.getElementById('sellServer').value,
           desc: document.getElementById('sellDesc').value,
