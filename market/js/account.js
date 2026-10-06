@@ -54,6 +54,35 @@ function bounceToShopHost() {
   return false;
 }
 
+function composeAccountLogin(form) {
+  const mode = (form.accountType && form.accountType.value) || "email";
+  const raw = (form.login.value || "").trim();
+  if (mode === "email") return raw;
+  let dial = mode === "other" ? (form.dialOther.value || "").trim().replace(/^\+/, "") : mode;
+  dial = dial.replace(/\D/g, "");
+  let num = raw.replace(/[\s\-()]/g, "");
+  if (num.startsWith("00")) num = num.slice(2);
+  if (num.startsWith("+")) return "+" + num.replace(/\D/g, "");
+  if (dial === "86" && /^1[3-9]\d{9}$/.test(num)) return "+86" + num;
+  num = num.replace(/^0+/, "");
+  return "+" + dial + num.replace(/\D/g, "");
+}
+
+function bindAccountTypeToggle(form) {
+  const type = form.accountType;
+  const other = form.dialOther;
+  const login = form.login;
+  if (!type || !login) return;
+  function sync() {
+    const phone = type.value !== "email";
+    if (other) other.classList.toggle("hidden", type.value !== "other");
+    login.placeholder = phone ? "手机号码，不要再加 0 和区号" : "you@email.com";
+    login.setAttribute("inputmode", phone ? "tel" : "email");
+  }
+  type.addEventListener("change", sync);
+  sync();
+}
+
 async function sellerMe() {
   if (!sellerToken()) return null;
   try {

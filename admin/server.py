@@ -389,7 +389,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
             login = str(payload.get("login") or "").strip().lower()
             if not login_kind(login):
-                self._json(400, {"error": "请填写中国大陆手机号或邮箱"})
+                self._json(400, {"error": "请填写邮箱，或选择区号后填写手机号"})
                 return
             with _write_lock:
                 data = _read_json(ROOT / "data" / "accounts.json", {"users": []})

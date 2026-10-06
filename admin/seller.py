@@ -9,6 +9,8 @@ import threading
 import time
 from pathlib import Path
 
+from notify import login_kind, normalize_login
+
 LOCK = threading.Lock()
 TOKEN_TTL = 12 * 3600
 MAX_LISTINGS = 50
@@ -17,7 +19,6 @@ PBKDF2_ROUNDS = 120_000
 _sessions: dict[str, dict] = {}
 _register_hits: dict[str, list[float]] = {}
 
-LOGIN_RE = re.compile(r"^(1[3-9]\d{9}|[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,})$")
 NAME_RE = re.compile(r"^[\w\u4e00-\u9fff ·\-_]{2,24}$")
 
 
@@ -59,9 +60,9 @@ def public_user(user: dict) -> dict:
 
 
 def find_user(data: dict, login: str):
-    key = login.strip().lower()
+    key = normalize_login(login)
     for u in data.get("users") or []:
-        if str(u.get("login", "")).lower() == key:
+        if normalize_login(str(u.get("login") or "")) == key:
             return u
     return None
 
@@ -77,11 +78,12 @@ def too_many_registers(ip: str) -> bool:
 
 
 def register(root: Path, login: str, password: str, name: str):
-    login = (login or "").strip()
+    login = normalize_login(login)
     name = (name or "").strip()
     password = password or ""
-    if not LOGIN_RE.match(login):
-        return None, "请用中国大陆手机号或邮箱作为账号"
+    kind = login_kind(login)
+    if not kind:
+        return None, "请填写邮箱，或选择区号后填写手机号"
     if not NAME_RE.match(name):
         return None, "店铺名 2–24 个字"
     if len(password) < 8:
@@ -93,12 +95,12 @@ def register(root: Path, login: str, password: str, name: str):
         salt = secrets.token_hex(16)
         user = {
             "id": "u" + secrets.token_hex(8),
-            "login": login.lower(),
+            "login": login,
             "name": name,
             "salt": salt,
             "password_hash": hash_password(password, salt),
             "created": int(time.time()),
-            "channel": "sms" if login.isdigit() else "email",
+            "channel": kind,
         }
         data.setdefault("users", []).append(user)
         save_accounts(root, data)

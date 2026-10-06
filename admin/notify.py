@@ -22,6 +22,8 @@ _otp_log: list[dict] = []
 
 def login_kind(login: str) -> str | None:
     s = (login or "").strip().lower()
+    if s.startswith("+") and 8 <= len(s) <= 16 and s[1:].isdigit():
+        return "sms"
     if len(s) == 11 and s.isdigit() and s.startswith("1"):
         return "sms"
     if "@" in s and "." in s.split("@")[-1] and 6 <= len(s) <= 80:
@@ -29,15 +31,29 @@ def login_kind(login: str) -> str | None:
     return None
 
 
+def normalize_login(login: str) -> str:
+    s = (login or "").strip()
+    if "@" in s:
+        return s.lower()
+    digits = "".join(ch for ch in s if ch.isdigit() or ch == "+")
+    if digits.startswith("00"):
+        digits = "+" + digits[2:]
+    if digits.startswith("+"):
+        return "+" + "".join(ch for ch in digits if ch.isdigit())
+    if len(digits) == 11 and digits.startswith("1"):
+        return "+86" + digits
+    return digits
+
+
 def _hash_code(login: str, code: str) -> str:
     return hashlib.sha256((login + ":" + code).encode("utf-8")).hexdigest()
 
 
 def issue_otp(login: str) -> tuple[str | None, str | None]:
-    login = (login or "").strip().lower()
+    login = normalize_login(login)
     kind = login_kind(login)
     if not kind:
-        return None, "请填写中国大陆手机号或邮箱"
+        return None, "请填写邮箱，或带国际区号的手机号"
     now = time.time()
     prev = _otp.get(login)
     if prev and now - prev.get("sent", 0) < OTP_COOLDOWN:
@@ -56,7 +72,7 @@ def issue_otp(login: str) -> tuple[str | None, str | None]:
 
 
 def consume_otp(login: str, code: str) -> str | None:
-    login = (login or "").strip().lower()
+    login = normalize_login(login)
     rec = _otp.get(login)
     if not rec or rec["exp"] < time.time():
         _otp.pop(login, None)
@@ -132,19 +148,21 @@ def send_email(to: str, subject: str, text: str) -> tuple[bool, str]:
 
 
 def send_sms(phone: str, code: str) -> tuple[bool, str]:
+    dest = phone[1:] if phone.startswith("+") else phone
     template = os.environ.get("ALIYUN_SMS_TEMPLATE_CODE", "").strip()
     if not template:
         return send_sms_text(phone, f"验证码{code}，10分钟内有效")
     params = json.dumps({"code": code}, ensure_ascii=False)
-    return _aliyun_sms(phone, template, params)
+    return _aliyun_sms(dest, template, params)
 
 
 def send_sms_text(phone: str, text: str) -> tuple[bool, str]:
+    dest = phone[1:] if str(phone).startswith("+") else phone
     template = os.environ.get("ALIYUN_SMS_NOTICE_TEMPLATE", "").strip()
     if not template:
         return False, "短信通道未开通（缺少阿里云短信签名/模板）"
     params = json.dumps({"txt": text[:20]}, ensure_ascii=False)
-    return _aliyun_sms(phone, template, params)
+    return _aliyun_sms(dest, template, params)
 
 
 def _aliyun_sms(phone: str, template_code: str, template_param: str) -> tuple[bool, str]:

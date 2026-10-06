@@ -20,8 +20,19 @@
       <label class="block">店铺名称
         <input name="name" required maxlength="24" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="例如：蓝黄卡社">
       </label>
-      <label class="block">手机号或邮箱
-        <input name="login" required maxlength="80" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="13800000000 或 you@email.com" autocomplete="username">
+      <label class="block">登录方式
+        <select name="accountType" class="mt-1 w-full border rounded-lg px-3 py-2.5">
+          <option value="email">邮箱</option>
+          <option value="86">中国大陆 +86</option>
+          <option value="852">中国香港 +852</option>
+          <option value="853">中国澳门 +853</option>
+          <option value="81">日本 +81</option>
+          <option value="other">其他国家/地区区号</option>
+        </select>
+      </label>
+      <input name="dialOther" maxlength="5" class="hidden w-full border rounded-lg px-3 py-2.5" placeholder="区号，例如 1、44、65">
+      <label class="block">账号
+        <input name="login" required maxlength="80" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="you@email.com" autocomplete="username">
       </label>
       <div>
         <label class="block mb-1">验证码</label>
@@ -44,6 +55,8 @@
 <script src="js/account.js"></script>
 <script>
 if (!bounceToShopHost()) {
+const form = document.getElementById("regForm");
+bindAccountTypeToggle(form);
 marketReady.then(async () => {
   document.getElementById("header").innerHTML = renderMarketHeader("sell");
   initMobileMenu();
@@ -74,13 +87,12 @@ function tickCool() {
 }
 
 document.getElementById("sendCodeBtn").addEventListener("click", async () => {
-  const login = document.querySelector("[name=login]").value.trim();
   const btn = document.getElementById("sendCodeBtn");
   btn.disabled = true;
   try {
     const data = await sellerApi("/api/seller/send-code", {
       method: "POST",
-      body: JSON.stringify({ login }),
+      body: JSON.stringify({ login: composeAccountLogin(form) }),
     });
     showMsg(data.message || "验证码已发送", !data.delivered);
     cooldown = 60;
@@ -102,7 +114,7 @@ document.getElementById("regForm").addEventListener("submit", async (e) => {
       method: "POST",
       body: JSON.stringify({
         name: f.name.value,
-        login: f.login.value,
+        login: composeAccountLogin(f),
         password: f.password.value,
         code: f.code.value,
       }),

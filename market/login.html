@@ -17,6 +17,17 @@
     <h1 class="text-2xl font-bold mb-2 text-[#1D355C]">卖家登录</h1>
     <p class="text-slate-500 mb-6 text-sm">登录后上架或管理你的商品。</p>
     <form id="loginForm" class="market-card p-6 space-y-4 text-sm">
+      <label class="block">登录方式
+        <select name="accountType" class="mt-1 w-full border rounded-lg px-3 py-2.5">
+          <option value="email">邮箱</option>
+          <option value="86">中国大陆 +86</option>
+          <option value="852">中国香港 +852</option>
+          <option value="853">中国澳门 +853</option>
+          <option value="81">日本 +81</option>
+          <option value="other">其他国家/地区区号</option>
+        </select>
+      </label>
+      <input name="dialOther" maxlength="5" class="hidden w-full border rounded-lg px-3 py-2.5" placeholder="区号，例如 1、44、65">
       <label class="block">账号
         <input name="login" required class="mt-1 w-full border rounded-lg px-3 py-2.5" autocomplete="username">
       </label>
@@ -35,6 +46,7 @@
 <script>
 const next = new URLSearchParams(location.search).get("next") || "mine.html";
 if (!bounceToShopHost()) {
+bindAccountTypeToggle(document.getElementById("loginForm"));
 marketReady.then(async () => {
   document.getElementById("header").innerHTML = renderMarketHeader("sell");
   initMobileMenu();
@@ -49,7 +61,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   try {
     const data = await sellerApi("/api/seller/login", {
       method: "POST",
-      body: JSON.stringify({ login: f.login.value, password: f.password.value }),
+      body: JSON.stringify({ login: composeAccountLogin(f), password: f.password.value }),
     });
     setSellerToken(data.token);
     location.href = next.startsWith("http") ? "mine.html" : next;
