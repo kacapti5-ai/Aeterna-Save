@@ -26,13 +26,32 @@ async function sellerApi(path, opts = {}) {
   const headers = { "Content-Type": "application/json", ...(opts.headers || {}) };
   const token = sellerToken();
   if (token) headers.Authorization = "Bearer " + token;
-  const res = await fetch(AETERNA_API + path, {
-    ...opts,
-    headers,
-  });
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 15000);
+  let res;
+  try {
+    res = await fetch(AETERNA_API + path, {
+      ...opts,
+      headers,
+      signal: ctrl.signal,
+    });
+  } catch (e) {
+    throw new Error("连不上上架服务，请刷新后重试");
+  } finally {
+    clearTimeout(timer);
+  }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || "请求失败");
   return data;
+}
+
+function bounceToShopHost() {
+  const h = location.hostname;
+  if (h === "aeternasave.com" || h === "www.aeternasave.com") {
+    location.replace("http://121.41.104.180" + location.pathname + location.search);
+    return true;
+  }
+  return false;
 }
 
 async function sellerMe() {

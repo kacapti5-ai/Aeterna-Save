@@ -165,6 +165,7 @@
 <script src="js/market.js"></script>
 <script src="js/account.js"></script>
 <script>
+if (!bounceToShopHost()) {
 marketReady.then(async () => {
   document.getElementById('header').innerHTML = renderMarketHeader('sell');
   initMobileMenu();
@@ -271,6 +272,7 @@ marketReady.then(async () => {
 
   updateStepUI();
 });
+}
 </script>
 </body>
 </html>

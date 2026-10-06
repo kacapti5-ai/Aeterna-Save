@@ -18,6 +18,15 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
+from notify import (
+    channel_status,
+    consume_otp,
+    issue_otp,
+    login_kind,
+    notify_user,
+    recent_otp_log,
+    send_verification,
+)
 from seller import (
     MAX_LISTINGS,
     drop_token,
@@ -306,6 +315,13 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(200, _read_json(SITE_PATH, {}))
             return
 
+        if path == "/api/notify-status":
+            if not self._is_local() or not _valid_token(self._admin_token()):
+                self._json(401, {"error": "未登录"})
+                return
+            self._json(200, {"channels": channel_status(), "recent": recent_otp_log()})
+            return
+
         if path == "/api/seller/me":
             user = self._current_seller()
             if not user:
@@ -366,6 +382,43 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True}, [("Set-Cookie", "admin_token=; Path=/; Max-Age=0")])
             return
 
+        if path == "/api/seller/send-code":
+            payload = self._payload()
+            if payload is None:
+                self._json(400, {"error": "无效请求"})
+                return
+            login = str(payload.get("login") or "").strip().lower()
+            if not login_kind(login):
+                self._json(400, {"error": "请填写中国大陆手机号或邮箱"})
+                return
+            with _write_lock:
+                data = _read_json(ROOT / "data" / "accounts.json", {"users": []})
+            from seller import find_user
+
+            if find_user(data, login):
+                self._json(400, {"error": "这个账号已注册，请直接登录"})
+                return
+            code, err = issue_otp(login)
+            if err:
+                self._json(400, {"error": err})
+                return
+            delivered, send_err = send_verification(login, code)
+            kind = login_kind(login)
+            where = "短信" if kind == "sms" else "邮箱"
+            if delivered:
+                self._json(200, {"ok": True, "delivered": True, "message": f"验证码已发到你的{where}"})
+                return
+            # Channel not ready yet: code still valid, shown in admin; keep register usable for owner.
+            self._json(
+                200,
+                {
+                    "ok": True,
+                    "delivered": False,
+                    "message": f"验证码已生成。{where}通道还没开通（{send_err}）。开通前可在管理后台「验证码」里看到。",
+                },
+            )
+            return
+
         if path == "/api/seller/register":
             if too_many_registers(self.client_address[0]):
                 self._json(429, {"error": "注册太频繁，请稍后再试"})
@@ -373,6 +426,10 @@ class Handler(BaseHTTPRequestHandler):
             payload = self._payload()
             if payload is None:
                 self._json(400, {"error": "无效请求"})
+                return
+            otp_err = consume_otp(str(payload.get("login") or ""), str(payload.get("code") or ""))
+            if otp_err:
+                self._json(400, {"error": otp_err})
                 return
             user, err = register(
                 ROOT,

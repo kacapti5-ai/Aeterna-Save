@@ -62,7 +62,26 @@ async function loadAll() {
   document.getElementById("statMonthly").value = (site.stats && site.stats.monthlyCards) || "";
   document.getElementById("statRate").value = (site.stats && site.stats.verifyRate) || "";
   document.getElementById("statGmv").value = (site.stats && site.stats.gmv) || "";
+  await loadOtp();
 }
+
+async function loadOtp() {
+  const box = document.getElementById("otpLog");
+  const st = document.getElementById("notifyStatus");
+  if (!box) return;
+  try {
+    const data = await api("/api/notify-status");
+    const ch = data.channels || {};
+    st.textContent = "邮箱通道：" + (ch.email ? "已开通" : "未开通") + "　短信通道：" + (ch.sms ? "已开通" : "未开通");
+    const rows = data.recent || [];
+    box.innerHTML = rows.length
+      ? rows.map((x) => `<div><code>${escapeHtml(x.login)}</code> · ${x.kind === "sms" ? "短信" : "邮箱"} · 验证码 <strong>${escapeHtml(x.code)}</strong></div>`).join("")
+      : '<div class="text-slate-400">暂无未过期验证码</div>';
+  } catch (e) {
+    st.textContent = e.message;
+  }
+}
+document.getElementById("refreshOtpBtn")?.addEventListener("click", loadOtp);
 
 function renderStats() {
   const list = market.products || [];

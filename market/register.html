@@ -15,19 +15,26 @@
 <main class="pt-24 pb-16">
   <div class="max-w-md mx-auto px-4">
     <h1 class="text-2xl font-bold mb-2 text-[#1D355C]">注册店铺</h1>
-    <p class="text-slate-500 mb-6 text-sm">注册后即可自己上架卡牌、玩具或游戏资产。不焦虑、不催促，填完就能发布。</p>
+    <p class="text-slate-500 mb-6 text-sm">先验证手机或邮箱，再创建店铺。以后有买家关注你的商品时，也会用同一通道发提醒。</p>
     <form id="regForm" class="market-card p-6 space-y-4 text-sm">
       <label class="block">店铺名称
         <input name="name" required maxlength="24" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="例如：蓝黄卡社">
       </label>
-      <label class="block">账号（手机号或邮箱）
-        <input name="login" required maxlength="40" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="13800000000 或 you@email.com" autocomplete="username">
+      <label class="block">手机号或邮箱
+        <input name="login" required maxlength="80" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="13800000000 或 you@email.com" autocomplete="username">
       </label>
+      <div>
+        <label class="block mb-1">验证码</label>
+        <div class="flex gap-2">
+          <input name="code" required inputmode="numeric" maxlength="6" class="flex-1 border rounded-lg px-3 py-2.5" placeholder="6 位数字" autocomplete="one-time-code">
+          <button type="button" id="sendCodeBtn" class="btn-outline-g2g px-3 py-2 whitespace-nowrap">发送验证码</button>
+        </div>
+      </div>
       <label class="block">密码（至少 8 位）
         <input name="password" type="password" required minlength="8" class="mt-1 w-full border rounded-lg px-3 py-2.5" autocomplete="new-password">
       </label>
-      <p id="regError" class="hidden text-red-500"></p>
-      <button class="btn-g2g w-full py-2.5">创建账号</button>
+      <p id="regMsg" class="hidden text-sm"></p>
+      <button id="regBtn" type="submit" class="btn-g2g w-full py-2.5">创建账号</button>
       <p class="text-slate-400 text-xs">已有账号？<a href="login.html" class="text-[#1E58E0]">去登录</a></p>
     </form>
   </div>
@@ -36,17 +43,60 @@
 <script src="js/market.js"></script>
 <script src="js/account.js"></script>
 <script>
+if (!bounceToShopHost()) {
 marketReady.then(async () => {
   document.getElementById("header").innerHTML = renderMarketHeader("sell");
   initMobileMenu();
   const me = await mountSellerNav("sell");
   if (me) location.replace("mine.html");
 });
+
+function showMsg(text, bad) {
+  const el = document.getElementById("regMsg");
+  el.textContent = text;
+  el.classList.remove("hidden", "text-red-500", "text-green-600");
+  el.classList.add(bad ? "text-red-500" : "text-green-600");
+}
+
+let cooldown = 0;
+let coolTimer = null;
+function tickCool() {
+  const btn = document.getElementById("sendCodeBtn");
+  if (cooldown <= 0) {
+    btn.disabled = false;
+    btn.textContent = "发送验证码";
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = cooldown + "s";
+  cooldown -= 1;
+  coolTimer = setTimeout(tickCool, 1000);
+}
+
+document.getElementById("sendCodeBtn").addEventListener("click", async () => {
+  const login = document.querySelector("[name=login]").value.trim();
+  const btn = document.getElementById("sendCodeBtn");
+  btn.disabled = true;
+  try {
+    const data = await sellerApi("/api/seller/send-code", {
+      method: "POST",
+      body: JSON.stringify({ login }),
+    });
+    showMsg(data.message || "验证码已发送", !data.delivered);
+    cooldown = 60;
+    tickCool();
+  } catch (ex) {
+    showMsg(ex.message, true);
+    btn.disabled = false;
+  }
+});
+
 document.getElementById("regForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const err = document.getElementById("regError");
-  err.classList.add("hidden");
+  const btn = document.getElementById("regBtn");
   const f = e.target;
+  btn.disabled = true;
+  btn.textContent = "提交中…";
   try {
     const data = await sellerApi("/api/seller/register", {
       method: "POST",
@@ -54,15 +104,18 @@ document.getElementById("regForm").addEventListener("submit", async (e) => {
         name: f.name.value,
         login: f.login.value,
         password: f.password.value,
+        code: f.code.value,
       }),
     });
     setSellerToken(data.token);
     location.href = "sell.html";
   } catch (ex) {
-    err.textContent = ex.message;
-    err.classList.remove("hidden");
+    showMsg(ex.message, true);
+    btn.disabled = false;
+    btn.textContent = "创建账号";
   }
 });
+}
 </script>
 </body>
 </html>

@@ -17,7 +17,7 @@ PBKDF2_ROUNDS = 120_000
 _sessions: dict[str, dict] = {}
 _register_hits: dict[str, list[float]] = {}
 
-LOGIN_RE = re.compile(r"^[A-Za-z0-9_.+\-@]{3,40}$")
+LOGIN_RE = re.compile(r"^(1[3-9]\d{9}|[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,})$")
 NAME_RE = re.compile(r"^[\w\u4e00-\u9fff ·\-_]{2,24}$")
 
 
@@ -81,7 +81,7 @@ def register(root: Path, login: str, password: str, name: str):
     name = (name or "").strip()
     password = password or ""
     if not LOGIN_RE.match(login):
-        return None, "请用手机号、邮箱或 3–40 位英文数字作为账号"
+        return None, "请用中国大陆手机号或邮箱作为账号"
     if not NAME_RE.match(name):
         return None, "店铺名 2–24 个字"
     if len(password) < 8:
@@ -98,6 +98,7 @@ def register(root: Path, login: str, password: str, name: str):
             "salt": salt,
             "password_hash": hash_password(password, salt),
             "created": int(time.time()),
+            "channel": "sms" if login.isdigit() else "email",
         }
         data.setdefault("users", []).append(user)
         save_accounts(root, data)
