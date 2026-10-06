@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的上架 · Aeterna Save</title>
+  <link rel="stylesheet" href="../css/brand.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/market.css">
+</head>
+<body class="market-body font-sans">
+<div id="header"></div>
+<main class="pt-24 pb-16">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-[#1D355C]">我的上架</h1>
+        <p class="text-sm text-slate-500 mt-1">这里只显示你店铺里的商品。</p>
+      </div>
+      <a href="sell.html" class="btn-g2g px-4 py-2 text-sm">继续上架</a>
+    </div>
+    <p id="listMsg" class="text-sm text-slate-400 mb-4"></p>
+    <div id="list" class="space-y-3"></div>
+  </div>
+</main>
+<script src="js/data.js"></script>
+<script src="js/market.js"></script>
+<script src="js/account.js"></script>
+<script>
+marketReady.then(async () => {
+  document.getElementById("header").innerHTML = renderMarketHeader("sell");
+  initMobileMenu();
+  const me = await mountSellerNav("mine");
+  if (!requireSeller(me, "mine.html")) return;
+  const msg = document.getElementById("listMsg");
+  try {
+    const data = await sellerApi("/api/seller/products");
+    const rows = data.products || [];
+    if (!rows.length) {
+      msg.textContent = "还没有商品。点右上角上架第一件。";
+      return;
+    }
+    document.getElementById("list").innerHTML = rows.map((p) => `
+      <div class="market-card p-4 flex justify-between gap-4 items-center">
+        <div>
+          <div class="font-medium text-[#1D355C]">${escapeText(p.title)}</div>
+          <div class="text-xs text-slate-500 mt-1">${escapeText(p.gameName)} · ¥${Number(p.price || 0).toLocaleString()} · ${p.published === false ? "已隐藏" : "已出现在官网"}</div>
+        </div>
+        <button type="button" class="text-red-500 text-sm" data-del="${p.id}">下架删除</button>
+      </div>
+    `).join("");
+    document.querySelectorAll("[data-del]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        if (!confirm("确定从官网拿下这件商品？")) return;
+        await sellerApi("/api/seller/products/" + btn.dataset.del, { method: "DELETE" });
+        location.reload();
+      });
+    });
+  } catch (ex) {
+    msg.textContent = ex.message;
+  }
+});
+</script>
+</body>
+</html>

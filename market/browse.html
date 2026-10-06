@@ -115,10 +115,12 @@
 
 <script src="js/data.js"></script>
 <script src="js/market.js"></script>
+<script src="js/account.js"></script>
 <script>
 marketReady.then(() => {
   document.getElementById('header').innerHTML = renderMarketHeader('browse');
   initMobileMenu();
+  mountSellerNav('browse');
 
   const gameSelect = document.querySelector('[name=game]');
   MARKET_GAMES.forEach(g => {

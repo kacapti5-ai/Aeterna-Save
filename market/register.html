@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册店铺 · Aeterna Save</title>
+  <link rel="stylesheet" href="../css/brand.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/market.css">
+</head>
+<body class="market-body font-sans">
+<div id="header"></div>
+<main class="pt-24 pb-16">
+  <div class="max-w-md mx-auto px-4">
+    <h1 class="text-2xl font-bold mb-2 text-[#1D355C]">注册店铺</h1>
+    <p class="text-slate-500 mb-6 text-sm">注册后即可自己上架卡牌、玩具或游戏资产。不焦虑、不催促，填完就能发布。</p>
+    <form id="regForm" class="market-card p-6 space-y-4 text-sm">
+      <label class="block">店铺名称
+        <input name="name" required maxlength="24" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="例如：蓝黄卡社">
+      </label>
+      <label class="block">账号（手机号或邮箱）
+        <input name="login" required maxlength="40" class="mt-1 w-full border rounded-lg px-3 py-2.5" placeholder="13800000000 或 you@email.com" autocomplete="username">
+      </label>
+      <label class="block">密码（至少 8 位）
+        <input name="password" type="password" required minlength="8" class="mt-1 w-full border rounded-lg px-3 py-2.5" autocomplete="new-password">
+      </label>
+      <p id="regError" class="hidden text-red-500"></p>
+      <button class="btn-g2g w-full py-2.5">创建账号</button>
+      <p class="text-slate-400 text-xs">已有账号？<a href="login.html" class="text-[#1E58E0]">去登录</a></p>
+    </form>
+  </div>
+</main>
+<script src="js/data.js"></script>
+<script src="js/market.js"></script>
+<script src="js/account.js"></script>
+<script>
+marketReady.then(async () => {
+  document.getElementById("header").innerHTML = renderMarketHeader("sell");
+  initMobileMenu();
+  const me = await mountSellerNav("sell");
+  if (me) location.replace("mine.html");
+});
+document.getElementById("regForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const err = document.getElementById("regError");
+  err.classList.add("hidden");
+  const f = e.target;
+  try {
+    const data = await sellerApi("/api/seller/register", {
+      method: "POST",
+      body: JSON.stringify({
+        name: f.name.value,
+        login: f.login.value,
+        password: f.password.value,
+      }),
+    });
+    setSellerToken(data.token);
+    location.href = "sell.html";
+  } catch (ex) {
+    err.textContent = ex.message;
+    err.classList.remove("hidden");
+  }
+});
+</script>
+</body>
+</html>

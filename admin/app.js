@@ -79,6 +79,7 @@ function renderProducts() {
       return `<tr class="border-b border-amber-100">
         <td class="py-2 pr-2">${escapeHtml(p.title || "")}</td>
         <td>${escapeHtml(p.gameName || p.game || "")}</td>
+        <td>${escapeHtml(p.seller || "")}${p.source === "seller" ? ' <span class="text-xs text-amber-600">客户</span>' : ""}</td>
         <td>¥${Number(p.price || 0).toLocaleString()}</td>
         <td>${on ? '<span class="text-green-600">上架</span>' : '<span class="text-slate-400">隐藏</span>'}</td>
         <td class="text-right whitespace-nowrap">

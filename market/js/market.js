@@ -20,6 +20,7 @@ function renderMarketHeader(active) {
       </a>
       <nav class="hidden lg:flex gap-5 text-sm">${nav}</nav>
       <div class="flex items-center gap-2">
+        <span id="sellerNav" class="hidden sm:flex items-center gap-3"></span>
         <a href="browse.html?type=cards" class="btn-g2g px-4 py-2 text-sm hidden sm:inline">买卡牌</a>
         <a href="sell.html" class="btn-outline-g2g px-4 py-2 text-sm hidden sm:inline">我要卖</a>
         <button type="button" id="mMenuBtn" class="lg:hidden text-xl text-[#1D355C] p-2"><i class="fa fa-bars"></i></button>
@@ -27,6 +28,7 @@ function renderMarketHeader(active) {
     </div>
     <div id="mMobileMenu" class="hidden lg:hidden border-t border-amber-200 px-4 py-3 flex flex-col gap-2 text-sm bg-white">
       ${links.map(l => `<a href="${l.href}" class="py-2 text-slate-600">${l.label}</a>`).join('')}
+      <div id="sellerNavMobile" class="py-2 flex flex-wrap gap-3"></div>
     </div>
   </header>`;
 }

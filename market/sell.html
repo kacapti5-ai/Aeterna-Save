@@ -142,8 +142,9 @@
         <div id="sellSuccess" class="hidden text-center py-8">
           <i class="fa fa-check-circle text-5xl text-green-500 mb-4"></i>
           <h3 class="text-xl font-bold mb-2">上架成功！</h3>
-          <p class="text-gray-400 mb-6">您的商品已发布到市场</p>
+          <p class="text-gray-400 mb-6">商品会同步到官网市场。大约 1 分钟后可在「全部商品」里看到。</p>
           <a href="browse.html" class="btn-g2g inline-block px-6 py-3">查看市场</a>
+          <a href="mine.html" class="btn-outline-g2g inline-block px-6 py-3 ml-2">我的上架</a>
         </div>
       </div>
 
@@ -162,10 +163,13 @@
 
 <script src="js/data.js"></script>
 <script src="js/market.js"></script>
+<script src="js/account.js"></script>
 <script>
-marketReady.then(() => {
+marketReady.then(async () => {
   document.getElementById('header').innerHTML = renderMarketHeader('sell');
   initMobileMenu();
+  const me = await mountSellerNav('sell');
+  if (!requireSeller(me, 'sell.html')) return;
 
   let currentStep = 1;
   const selectedGameName = {};
@@ -234,9 +238,32 @@ marketReady.then(() => {
       alert('请同意验号协议'); return;
     }
     if (currentStep === 5) {
-      document.getElementById('sellSummary').classList.add('hidden');
-      document.getElementById('sellNav').classList.add('hidden');
-      document.getElementById('sellSuccess').classList.remove('hidden');
+      const btn = document.getElementById('btnNext');
+      btn.disabled = true;
+      sellerApi('/api/seller/products', {
+        method: 'POST',
+        body: JSON.stringify({
+          game: document.getElementById('selectedGame').value,
+          title: document.getElementById('sellTitle').value,
+          server: document.getElementById('sellServer').value,
+          desc: document.getElementById('sellDesc').value,
+          type: document.getElementById('sellType').value,
+          price: document.getElementById('sellPrice').value,
+          legacy: document.getElementById('sellLegacy').checked,
+          compensation: document.getElementById('sellCompensation').checked,
+        }),
+      }).then((res) => {
+        document.getElementById('sellSummary').classList.add('hidden');
+        document.getElementById('sellNav').classList.add('hidden');
+        const ok = document.getElementById('sellSuccess');
+        ok.classList.remove('hidden');
+        if (res && res.published === false) {
+          ok.querySelector('p').textContent = '已保存在店铺，但同步官网失败：' + (res.error || '');
+        }
+      }).catch((ex) => {
+        alert(ex.message);
+        btn.disabled = false;
+      });
       return;
     }
     if (currentStep < 5) { currentStep++; updateStepUI(); }

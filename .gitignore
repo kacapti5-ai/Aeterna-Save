@@ -5,3 +5,4 @@ admin/password.txt
 admin/.signing_key
 .env
 data/*.tmp
+data/accounts.json
