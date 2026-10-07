@@ -63,3 +63,62 @@
   background: linear-gradient(135deg, #fef9c3 0%, #dbeafe 50%, #fce7f3 100%);
   border: 2px solid #fbbf24;
 }
+
+.nav-flyout {
+  position: relative;
+}
+.nav-flyout > a .nav-caret {
+  display: inline-block;
+  margin-left: 0.2rem;
+  font-size: 0.7em;
+  transition: transform 0.15s ease;
+}
+.nav-flyout:hover > a .nav-caret,
+.nav-flyout:focus-within > a .nav-caret {
+  transform: rotate(180deg);
+}
+.nav-flyout-menu {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  min-width: 10.5rem;
+  padding-top: 0.7rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 60;
+}
+.nav-flyout-menu > div {
+  background: #fff;
+  border: 2px solid #fde68a;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(29, 53, 92, 0.12);
+  overflow: hidden;
+  padding: 0.35rem 0;
+}
+.nav-flyout-menu a {
+  display: block;
+  padding: 0.55rem 1rem;
+  color: #1d355c;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-flyout-menu a:hover {
+  background: #fffbeb;
+  color: #3b4cca;
+}
+.nav-flyout:hover .nav-flyout-menu,
+.nav-flyout:focus-within .nav-flyout-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.nav-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-left: 0.9rem;
+  margin: 0.15rem 0 0.35rem;
+  border-left: 2px solid #fde68a;
+}

@@ -57,12 +57,19 @@
                 <div class="text-[10px] text-slate-400 hidden sm:block">永恒守护科技 · 永不落幕</div>
             </div>
         </a>
-        <nav class="hidden lg:flex gap-5 text-sm text-slate-600">
+        <nav class="hidden lg:flex gap-5 text-sm text-slate-600 items-center">
             <a href="#home" class="hover:text-primary transition">首页</a>
-            <a href="market/index.html" class="hover:text-secondary transition text-secondary font-medium">资产市场</a>
-            <a href="#collectibles" class="hover:text-secondary transition text-coral font-medium">卡牌 & 玩具</a>
-            <a href="#game-assets" class="hover:text-secondary transition">游戏资产</a>
-            <a href="#resell" class="hover:text-primary transition">转卖</a>
+            <div class="nav-flyout">
+                <a href="market/index.html" class="hover:text-secondary transition text-secondary font-medium inline-flex items-center">资产市场<span class="nav-caret" aria-hidden="true">▾</span></a>
+                <div class="nav-flyout-menu">
+                    <div>
+                        <a href="market/index.html">进入市场</a>
+                        <a href="#collectibles">卡牌 &amp; 玩具</a>
+                        <a href="#game-assets">游戏资产</a>
+                        <a href="#resell">转卖</a>
+                    </div>
+                </div>
+            </div>
             <a href="#materials" class="hover:text-primary transition">素材库</a>
             <a href="#security" class="hover:text-primary transition">安心保障</a>
             <a href="#process" class="hover:text-primary transition">怎么玩</a>
@@ -77,9 +84,11 @@
         <nav class="flex flex-col gap-3 text-slate-600">
             <a href="#home" class="hover:text-primary py-1">首页</a>
             <a href="market/index.html" class="hover:text-secondary py-1 text-secondary">资产市场</a>
-            <a href="#collectibles" class="hover:text-secondary py-1 text-coral">卡牌 & 玩具</a>
-            <a href="#game-assets" class="hover:text-secondary py-1">游戏资产</a>
-            <a href="#resell" class="hover:text-primary py-1">转卖</a>
+            <div class="nav-sub">
+                <a href="#collectibles" class="hover:text-secondary py-1 text-coral">卡牌 &amp; 玩具</a>
+                <a href="#game-assets" class="hover:text-secondary py-1">游戏资产</a>
+                <a href="#resell" class="hover:text-primary py-1">转卖</a>
+            </div>
             <a href="#materials" class="hover:text-primary py-1">素材库</a>
             <a href="#market" class="hover:text-primary py-1">玩家社区</a>
             <a href="#security" class="hover:text-primary py-1">安心保障</a>
