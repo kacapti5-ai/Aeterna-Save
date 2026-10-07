@@ -68,9 +68,45 @@
       "name": "宝可梦",
       "icon": "fa-gamepad",
       "color": "#3B4CCA"
+    },
+    {
+      "id": "gc97f273b07",
+      "name": "宝可夢",
+      "icon": "fa-gamepad",
+      "color": "#3B4CCA"
     }
   ],
   "products": [
+    {
+      "id": "pa97b453b4592",
+      "game": "gc97f273b07",
+      "gameName": "宝可夢",
+      "type": "account",
+      "typeLabel": "账号",
+      "title": "王者50星",
+      "price": 2888,
+      "server": "微信區",
+      "level": "",
+      "seller": "Siokong",
+      "sellerId": "u509592d14cc0bc78",
+      "sellerRating": 5.0,
+      "sellerOrders": 0,
+      "delivery": "48小时内",
+      "verified": false,
+      "escrow": true,
+      "compensation": true,
+      "legacy": true,
+      "legacyPlan": "",
+      "tags": [],
+      "image": "🎴",
+      "items": [
+        "全皮膚"
+      ],
+      "linkedAssets": [],
+      "verifyNote": "",
+      "published": true,
+      "source": "seller"
+    },
     {
       "id": "p73e864e2ee0d",
       "game": "gd1107c5631",
