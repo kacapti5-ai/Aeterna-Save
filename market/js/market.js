@@ -14,7 +14,7 @@ function renderMarketHeader(active) {
   return `
   <header class="market-header fixed w-full z-50">
     <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="index.html" class="flex items-center gap-2 font-bold text-lg text-[#1D355C]">
+      <a href="../index.html" class="flex items-center gap-2 font-bold text-lg text-[#1D355C]" aria-label="返回首页">
         <img src="../static/img/logo-mark.png" alt="Aeterna Save" class="h-10 w-auto object-contain bg-white">
         <span>Aeterna Save <span class="text-slate-400 font-normal text-sm hidden sm:inline">· 永恒守护</span></span>
       </a>
