@@ -2,6 +2,7 @@ const TYPE_LABEL = { cards: "卡牌", toys: "玩具", account: "账号", items: 
 
 let market = { games: [], products: [] };
 let site = { stats: {} };
+let overview = { users: [], counts: {}, byGame: [] };
 
 async function api(path, opts = {}) {
   const res = await fetch(path, {
@@ -56,6 +57,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 async function loadAll() {
   market = await api("/api/market");
   site = await api("/api/site");
+  overview = await api("/api/overview");
   renderStats();
   renderProducts();
   renderGames();
@@ -84,10 +86,47 @@ async function loadOtp() {
 document.getElementById("refreshOtpBtn")?.addEventListener("click", loadOtp);
 
 function renderStats() {
+  const c = overview.counts || {};
   const list = market.products || [];
-  document.getElementById("statProducts").textContent = list.filter((p) => p.published !== false).length;
-  document.getElementById("statGames").textContent = (market.games || []).length;
-  document.getElementById("statHidden").textContent = list.filter((p) => p.published === false).length;
+  document.getElementById("statUsers").textContent = c.users || 0;
+  document.getElementById("statSellerListings").textContent = c.sellerListings || 0;
+  document.getElementById("statProducts").textContent = c.published != null ? c.published : list.filter((p) => p.published !== false).length;
+  document.getElementById("statHidden").textContent = c.hidden != null ? c.hidden : list.filter((p) => p.published === false).length;
+  document.getElementById("statGames").textContent = c.games != null ? c.games : (market.games || []).length;
+
+  const bars = document.getElementById("gameBars");
+  const rows = overview.byGame || [];
+  const max = Math.max(1, ...rows.map((x) => x.count));
+  bars.innerHTML = rows.length
+    ? rows
+        .map((x) => {
+          const pct = Math.round((x.count / max) * 100);
+          return `<div class="flex items-center gap-2">
+            <div class="w-24 truncate text-slate-600" title="${escapeAttr(x.name)}">${escapeHtml(x.name)}</div>
+            <div class="flex-1 h-2 bg-amber-100 rounded-full overflow-hidden"><div class="h-2 bg-[#1E58E0] rounded-full" style="width:${pct}%"></div></div>
+            <div class="w-8 text-right text-slate-500">${x.count}</div>
+          </div>`;
+        })
+        .join("")
+    : '<div class="text-slate-400">还没有商品</div>';
+
+  const tb = document.getElementById("userTable");
+  const users = overview.users || [];
+  const chLabel = { email: "邮箱", sms: "手机" };
+  tb.innerHTML = users.length
+    ? users
+        .map((u) => {
+          const when = u.created ? new Date(u.created * 1000).toLocaleString("zh-CN", { hour12: false }) : "—";
+          return `<tr class="border-b border-amber-100">
+            <td class="py-2 pr-2">${escapeHtml(u.name || "")}</td>
+            <td class="font-mono text-xs">${escapeHtml(u.login || "")}</td>
+            <td>${escapeHtml(chLabel[u.channel] || u.channel || "—")}</td>
+            <td class="text-xs text-slate-500">${escapeHtml(when)}</td>
+            <td class="text-right">${u.listings || 0}</td>
+          </tr>`;
+        })
+        .join("")
+    : '<tr><td colspan="5" class="py-3 text-slate-400">还没有客户注册</td></tr>';
 }
 
 function renderProducts() {

@@ -59,6 +59,37 @@ def public_user(user: dict) -> dict:
     }
 
 
+def mask_login(login: str) -> str:
+    s = str(login or "").strip()
+    if "@" in s:
+        name, _, host = s.partition("@")
+        shown = name[0] + "***" if name else "*"
+        return shown + "@" + host
+    digits = "".join(ch for ch in s if ch.isdigit())
+    if len(digits) >= 7:
+        prefix = "+" if s.startswith("+") else ""
+        head = digits[:2] if prefix else digits[:3]
+        return prefix + head + "****" + digits[-4:]
+    return "***" if s else ""
+
+
+def admin_users(root: Path) -> list:
+    data = load_accounts(root)
+    rows = []
+    for u in data.get("users") or []:
+        rows.append(
+            {
+                "id": u.get("id"),
+                "name": u.get("name") or "",
+                "login": mask_login(u.get("login") or ""),
+                "channel": u.get("channel") or login_kind(u.get("login") or "") or "",
+                "created": int(u.get("created") or 0),
+            }
+        )
+    rows.sort(key=lambda x: x.get("created") or 0, reverse=True)
+    return rows
+
+
 def find_user(data: dict, login: str):
     key = normalize_login(login)
     for u in data.get("users") or []:

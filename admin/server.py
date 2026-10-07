@@ -30,6 +30,7 @@ from notify import (
 )
 from seller import (
     MAX_LISTINGS,
+    admin_users,
     drop_token,
     new_token,
     public_user,
@@ -314,6 +315,50 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(200, _read_json(DATA_PATH, {"games": [], "products": []}))
             else:
                 self._json(200, _read_json(SITE_PATH, {}))
+            return
+
+        if path == "/api/overview":
+            if not self._is_local() or not _valid_token(self._admin_token()):
+                self._json(401, {"error": "未登录"})
+                return
+            market = _read_json(DATA_PATH, {"games": [], "products": []})
+            products = market.get("products") or []
+            users = admin_users(ROOT)
+            listings = {}
+            by_game = {}
+            seller_n = 0
+            published = 0
+            hidden = 0
+            for p in products:
+                sid = p.get("sellerId")
+                if sid:
+                    listings[sid] = listings.get(sid, 0) + 1
+                if p.get("source") == "seller":
+                    seller_n += 1
+                if p.get("published") is False:
+                    hidden += 1
+                else:
+                    published += 1
+                gname = (p.get("gameName") or p.get("game") or "未分类").strip() or "未分类"
+                by_game[gname] = by_game.get(gname, 0) + 1
+            for u in users:
+                u["listings"] = listings.get(u.get("id"), 0)
+            game_bars = sorted(by_game.items(), key=lambda kv: (-kv[1], kv[0]))
+            self._json(
+                200,
+                {
+                    "users": users,
+                    "counts": {
+                        "users": len(users),
+                        "sellerListings": seller_n,
+                        "published": published,
+                        "hidden": hidden,
+                        "games": len(market.get("games") or []),
+                        "products": len(products),
+                    },
+                    "byGame": [{"name": n, "count": c} for n, c in game_bars],
+                },
+            )
             return
 
         if path == "/api/notify-status":

@@ -44,11 +44,53 @@
       </div>
     </header>
     <main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
-      <div class="grid sm:grid-cols-3 gap-4">
-        <div class="panel p-4"><div class="text-xs text-slate-400">上架商品</div><div id="statProducts" class="text-2xl font-bold text-[#1E58E0]">0</div></div>
-        <div class="panel p-4"><div class="text-xs text-slate-400">游戏分类</div><div id="statGames" class="text-2xl font-bold text-[#1E58E0]">0</div></div>
-        <div class="panel p-4"><div class="text-xs text-slate-400">已隐藏</div><div id="statHidden" class="text-2xl font-bold text-slate-500">0</div></div>
-      </div>
+      <section class="panel p-5">
+        <h2 class="font-bold mb-4">总览</h2>
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-3">
+          <div class="rounded-xl bg-amber-50 border border-amber-100 p-4">
+            <div class="text-xs text-slate-400">注册用户</div>
+            <div id="statUsers" class="text-2xl font-bold text-[#1E58E0]">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">客户自己注册的账号</div>
+          </div>
+          <div class="rounded-xl bg-amber-50 border border-amber-100 p-4">
+            <div class="text-xs text-slate-400">客户上架</div>
+            <div id="statSellerListings" class="text-2xl font-bold text-[#1E58E0]">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">客户提交的商品</div>
+          </div>
+          <div class="rounded-xl bg-amber-50 border border-amber-100 p-4">
+            <div class="text-xs text-slate-400">上架中</div>
+            <div id="statProducts" class="text-2xl font-bold text-[#1E58E0]">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">官网可见</div>
+          </div>
+          <div class="rounded-xl bg-amber-50 border border-amber-100 p-4">
+            <div class="text-xs text-slate-400">已隐藏</div>
+            <div id="statHidden" class="text-2xl font-bold text-slate-500">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">前台不显示</div>
+          </div>
+          <div class="rounded-xl bg-amber-50 border border-amber-100 p-4">
+            <div class="text-xs text-slate-400">游戏分类</div>
+            <div id="statGames" class="text-2xl font-bold text-[#1E58E0]">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">用于筛选归类</div>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 mt-8">
+          <div>
+            <h3 class="text-sm font-medium text-slate-600 mb-3">按游戏分布</h3>
+            <div id="gameBars" class="space-y-2 text-sm"></div>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-slate-600 mb-3">注册用户</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="text-left text-slate-400 border-b">
+                  <tr><th class="py-2">店铺</th><th>账号</th><th>方式</th><th>注册时间</th><th class="text-right">上架</th></tr>
+                </thead>
+                <tbody id="userTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="panel p-5">
         <div class="flex items-center justify-between mb-4">
