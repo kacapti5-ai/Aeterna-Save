@@ -62,9 +62,45 @@
       "icon": "fa-gamepad",
       "offers": "5.6k",
       "color": "#ff4655"
+    },
+    {
+      "id": "gd1107c5631",
+      "name": "宝可梦",
+      "icon": "fa-gamepad",
+      "color": "#3B4CCA"
     }
   ],
   "products": [
+    {
+      "id": "p73e864e2ee0d",
+      "game": "gd1107c5631",
+      "gameName": "宝可梦",
+      "type": "account",
+      "typeLabel": "账号",
+      "title": "宝可梦2025 世界杯卡",
+      "price": 2888,
+      "server": "无",
+      "level": "",
+      "seller": "比卡丘卡社",
+      "sellerId": "u1d29edcde6e7be6b",
+      "sellerRating": 5.0,
+      "sellerOrders": 0,
+      "delivery": "48小时内",
+      "verified": false,
+      "escrow": true,
+      "compensation": true,
+      "legacy": false,
+      "legacyPlan": "",
+      "tags": [],
+      "image": "🎴",
+      "items": [
+        "99新 s级"
+      ],
+      "linkedAssets": [],
+      "verifyNote": "",
+      "published": true,
+      "source": "seller"
+    },
     {
       "id": "p007",
       "game": "pokemon",
